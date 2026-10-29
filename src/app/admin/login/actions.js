@@ -1,6 +1,6 @@
 "use server";
 
-import { auth } from "@/lib/auth/server";
+import { getAuth } from "@/lib/auth/server";
 
 export async function createAdminAccount(password) {
   const adminEmail = process.env.ADMIN_EMAIL?.trim().toLowerCase();
@@ -13,7 +13,7 @@ export async function createAdminAccount(password) {
     return { error: "Choose a password with at least 8 characters." };
   }
 
-  const { data, error } = await auth.signUp.email({
+  const { data, error } = await getAuth().signUp.email({
     email: adminEmail,
     name: "Admin",
     password,

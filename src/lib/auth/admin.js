@@ -1,4 +1,4 @@
-import { auth } from "./server";
+import { getAuth } from "./server";
 
 export async function getAdminAccess() {
   const adminEmail = process.env.ADMIN_EMAIL?.trim().toLowerCase();
@@ -7,7 +7,7 @@ export async function getAdminAccess() {
     return { status: "unconfigured" };
   }
 
-  const { data: session, error } = await auth.getSession();
+  const { data: session, error } = await getAuth().getSession();
 
   if (error) {
     throw error;

@@ -11,9 +11,17 @@ function requiredEnvironmentVariable(name) {
   return value;
 }
 
-export const auth = createNeonAuth({
-  baseUrl: requiredEnvironmentVariable("NEON_AUTH_BASE_URL"),
-  cookies: {
-    secret: requiredEnvironmentVariable("NEON_AUTH_COOKIE_SECRET"),
-  },
-});
+let auth;
+
+export function getAuth() {
+  if (!auth) {
+    auth = createNeonAuth({
+      baseUrl: requiredEnvironmentVariable("NEON_AUTH_BASE_URL"),
+      cookies: {
+        secret: requiredEnvironmentVariable("NEON_AUTH_COOKIE_SECRET"),
+      },
+    });
+  }
+
+  return auth;
+}
