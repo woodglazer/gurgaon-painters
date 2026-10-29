@@ -8,12 +8,12 @@ import Breadcrumbs from "../components/Breadcrumbs";
 const siteUrl = getSiteUrl();
 const cookieFaqs = [
   { question: "What cookie does this website use?", answer: "The site uses a necessary preference cookie named homeglazer-cookie-notice to remember that the cookie notice has been acknowledged. It expires after 180 days." },
-  { question: "Does this website use analytics or advertising cookies?", answer: "Analytics and advertising cookies are not currently enabled on this website." },
+  { question: "Does this website use analytics or advertising cookies?", answer: "Google Analytics (GA4) measures page usage and selected enquiry interactions. Advertising cookies are not enabled by this website." },
   { question: "How can I remove the preference cookie?", answer: "You can delete site cookies from your browser settings. If you clear this preference cookie, the notice may appear again." },
 ];
 
 export const metadata = createSeoMetadata({
-  title: "Cookie Policy | Gurgaon Painters",
+  title: "Cookies | Gurgaon Painters",
   description: "Learn which cookies Gurgaon Painters by Home Glazer uses, why the cookie notice preference is stored, and how to clear it.",
   ...(siteUrl ? { alternates: { canonical: `${siteUrl}/cookies` } } : {}),
   openGraph: { url: siteUrl ? `${siteUrl}/cookies` : undefined, type: "website" },
@@ -38,7 +38,11 @@ export default function CookiesPage() {
             </section>
             <section>
               <h2 className="text-xl font-semibold text-[#29251f]">Analytics and advertising</h2>
-              <p className="mt-2">Analytics and advertising cookies are not currently enabled by this website. If optional tracking is introduced later, this policy and the notice will be updated to explain it.</p>
+              <p className="mt-2">This website uses Google Analytics (GA4) to measure page usage and selected interactions, including enquiry submissions, phone-link clicks and WhatsApp-link clicks. The analytics events do not include the name, phone number, project message, or WhatsApp message text entered in the enquiry form. Google Analytics may store analytics cookies in your browser and process usage data under Google&apos;s privacy terms. This website does not enable advertising cookies.</p>
+            </section>
+            <section>
+              <h2 className="text-xl font-semibold text-[#29251f]">Embedded map</h2>
+              <p className="mt-2">The contact page embeds a Google Map for Home Glazer&apos;s Faridabad address. Loading the map may allow Google to process technical information under its own privacy terms.</p>
             </section>
             <section>
               <h2 className="text-xl font-semibold text-[#29251f]">Your browser settings</h2>

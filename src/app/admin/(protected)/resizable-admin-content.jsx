@@ -70,7 +70,7 @@ export default function ResizableAdminContent({ children }) {
       >
         <MoreVertical size={24} aria-hidden="true" />
       </button>
-      <main className="my-2 mr-2 min-w-0 flex-1 overflow-y-auto rounded-md border border-[#e9e3d9] bg-white p-5">
+      <main className="my-2 mr-2 min-w-0 flex-1 overflow-y-auto overscroll-y-contain rounded-md border border-[#e9e3d9] bg-white p-5">
         {children}
       </main>
     </div>

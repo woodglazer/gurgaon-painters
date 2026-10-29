@@ -17,7 +17,7 @@ const reasons = [
 ];
 
 export const metadata = createSeoMetadata({
-  title: "Why Choose Us | Gurgaon Painters",
+  title: "Why Us | Gurgaon Painters",
   description: "Learn how Home Glazer plans surface preparation, site visits, painting scope, and project coordination for Gurgaon properties.",
   ...(siteUrl ? { alternates: { canonical: `${siteUrl}/why-us` } } : {}),
   openGraph: { url: siteUrl ? `${siteUrl}/why-us` : undefined, type: "website" },

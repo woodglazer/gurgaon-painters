@@ -12,7 +12,7 @@ import Breadcrumbs from "../components/Breadcrumbs";
 const siteUrl = getSiteUrl();
 
 export const metadata = createSeoMetadata({
-  title: "Painting Services in Gurgaon | Gurgaon Painters",
+  title: "Painting Services Gurgaon | Gurgaon Painters",
   description: "Explore interior and exterior painting, wall textures, waterproofing, wood and metal finishes, and commercial painting in Gurgaon.",
   ...(siteUrl ? { alternates: { canonical: `${siteUrl}/services` } } : {}),
   openGraph: {

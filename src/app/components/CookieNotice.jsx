@@ -40,7 +40,7 @@ export default function CookieNotice() {
       <div>
         <h2 className="text-base font-semibold text-[#29251f]">Cookie notice</h2>
         <p className="mt-1 max-w-2xl text-sm leading-6 text-[#69645b]">
-          This site stores a necessary cookie to remember that you have seen this notice. Analytics and advertising cookies are not currently enabled. Read our <Link href="/cookies" className="font-semibold text-[#c2410c] underline underline-offset-2">cookie policy</Link>.
+          This site stores a necessary preference cookie and uses Google Analytics to measure website usage and enquiry interactions. Read our <Link href="/cookies" className="font-semibold text-[#c2410c] underline underline-offset-2">cookie policy</Link>.
         </p>
       </div>
       <button

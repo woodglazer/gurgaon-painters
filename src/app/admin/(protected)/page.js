@@ -10,7 +10,6 @@ import Link from "next/link";
 import { connection } from "next/server";
 import { getDatabaseClient } from "@/lib/db";
 import { ENQUIRY_STATUS_LABELS } from "@/lib/enquiry-config";
-import { articles } from "../../blog/articles";
 import AdminGreeting from "./admin-greeting";
 
 const quickActions = [
@@ -38,7 +37,7 @@ export default async function AdminDashboardPage() {
   await connection();
 
   const sql = getDatabaseClient();
-  const [counts, recentEnquiries] = await Promise.all([
+  const [counts, recentEnquiries, blogCounts] = await Promise.all([
     sql`
       SELECT
         COUNT(*)::int AS total_count,
@@ -51,6 +50,10 @@ export default async function AdminDashboardPage() {
       FROM enquiries
       ORDER BY created_at DESC
       LIMIT 5
+    `,
+    sql`
+      SELECT COUNT(*) FILTER (WHERE published = true)::int AS published_count
+      FROM blog_posts
     `,
   ]);
   const summary = counts[0];
@@ -76,7 +79,7 @@ export default async function AdminDashboardPage() {
     {
       label: "Published blogs",
       icon: BookOpen,
-      value: articles.length,
+      value: blogCounts[0].published_count,
       detail: "Published articles",
     },
   ];

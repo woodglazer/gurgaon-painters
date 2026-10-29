@@ -5,11 +5,13 @@ import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { services } from "../services/services";
+import { BRAND_NAME } from "../seo";
 
 const navItems = [
   { label: "Home", href: "/" },
   { label: "About", href: "/about" },
   { label: "Why Us", href: "/why-us" },
+  { label: "Areas", href: "/areas" },
   { label: "Blog", href: "/blog" },
   { label: "Contact", href: "/contact" },
 ];
@@ -28,13 +30,14 @@ export default function Navbar() {
         <Link
           href="/"
           className="flex shrink-0 items-center px-1 py-1 sm:px-2"
-          aria-label="Gurgaon Painters - Home"
+          aria-label={`${BRAND_NAME} - Home`}
         >
           <Image
             src="/gurgaon-painters-logo-transparent.png"
-            alt="Gurgaon Painters"
-            width={1215}
-            height={433}
+            alt={`${BRAND_NAME} logo`}
+            width={180}
+            height={64}
+            sizes="(min-width: 1024px) 144px, (min-width: 640px) 120px, 88px"
             priority
             className="h-8 w-[5.5rem] object-contain sm:h-9 sm:w-[7.5rem] lg:h-10 lg:w-36"
           />

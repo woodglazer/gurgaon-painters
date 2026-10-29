@@ -1,7 +1,14 @@
-import { Phone, MapPin } from "lucide-react";
+import { Phone, MapPin, Mail } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { services } from "../services/services";
+import { BRAND_NAME } from "../seo";
+import {
+  BUSINESS_EMAIL,
+  BUSINESS_PHONE,
+  BUSINESS_PHONE_HREF,
+} from "@/lib/business-contact";
+import { areas } from "../areas/areas";
 
 const footerLinks = [
   { label: "Home", href: "/" },
@@ -23,20 +30,22 @@ export default async function Footer() {
   return (
     <footer className="bg-[#1a1612] text-white">
       {/* Main footer content */}
-      <div className="mx-auto max-w-6xl px-5 py-10 sm:px-8 sm:py-12 lg:px-12 lg:py-16">
+      <div className="mx-auto w-full px-5 py-10 sm:px-8 sm:py-12 lg:px-12 lg:py-16">
+        <div className="mx-auto max-w-6xl">
         <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1fr]">
           {/* Brand column */}
           <div>
             <Link
               href="/"
               className="mb-5 inline-flex items-center gap-2.5 text-white"
-              aria-label="Gurgaon Painters - Home"
+              aria-label={`${BRAND_NAME} - Home`}
             >
               <Image
                 src="/gurgaon-painters-logo-transparent.png"
-                alt="Gurgaon Painters"
-                width={1215}
-                height={433}
+                alt={`${BRAND_NAME} logo`}
+                width={180}
+                height={64}
+                sizes="(min-width: 640px) 176px, 144px"
                 className="h-12 w-36 object-contain object-left sm:h-14 sm:w-44"
               />
             </Link>
@@ -51,15 +60,22 @@ export default async function Footer() {
             {/* Contact info */}
             <div className="mt-6 space-y-3">
               <a
-                href="tel:+919717256514"
+                href={BUSINESS_PHONE_HREF}
                 className="flex items-center gap-3 text-sm text-white/70 transition-colors hover:text-white"
               >
                 <Phone size={15} strokeWidth={1.7} className="shrink-0 text-[#c2410c]" />
-                +91 97172 56514
+                {BUSINESS_PHONE}
+              </a>
+              <a
+                href={`mailto:${BUSINESS_EMAIL}`}
+                className="flex items-center gap-3 text-sm text-white/70 transition-colors hover:text-white"
+              >
+                <Mail size={15} strokeWidth={1.7} className="shrink-0 text-[#c2410c]" />
+                {BUSINESS_EMAIL}
               </a>
               <div className="flex items-start gap-3 text-sm text-white/55">
                 <MapPin size={15} strokeWidth={1.7} className="mt-0.5 shrink-0 text-[#c2410c]" />
-                Gurgaon (Gurugram), Haryana, India
+                <span>Gurgaon (Gurugram), Haryana, India</span>
               </div>
             </div>
           </div>
@@ -128,6 +144,30 @@ export default async function Footer() {
           </div>
         </div>
 
+        <section
+          className="mt-8 border-t border-white/10 pt-6"
+          aria-labelledby="footer-areas-heading"
+        >
+          <h2
+            id="footer-areas-heading"
+            className="text-xs font-semibold uppercase tracking-[0.18em] text-white/50"
+          >
+            Areas We Serve
+          </h2>
+          <ul className="mt-4 grid grid-cols-2 gap-x-5 gap-y-3 sm:grid-cols-3 lg:grid-cols-5">
+            {areas.map((area) => (
+              <li key={area.slug}>
+                <Link
+                  href={`/areas/${area.slug}`}
+                  className="text-sm text-white/65 transition-colors hover:text-white"
+                >
+                  {area.name}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </section>
+
         {/* Divider */}
         <div className="mt-8 border-t border-white/10 pt-5 sm:flex sm:items-center sm:justify-between">
           <p className="text-xs text-white/35">
@@ -139,6 +179,7 @@ export default async function Footer() {
             <Link href="/privacy-policy" className="underline decoration-white/25 underline-offset-4 transition-colors hover:text-white">Privacy Policy</Link>
             <Link href="/sitemap.xml" className="underline decoration-white/25 underline-offset-4 transition-colors hover:text-white">Sitemap</Link>
           </div>
+        </div>
         </div>
       </div>
     </footer>

@@ -4,11 +4,16 @@ import Breadcrumbs from "../components/Breadcrumbs";
 import Link from "next/link";
 import { createSeoMetadata } from "../seo";
 import { getSiteUrl } from "../site-url";
+import {
+  BUSINESS_ADDRESS,
+  BUSINESS_EMAIL,
+  BUSINESS_PHONE,
+} from "@/lib/business-contact";
 
 const siteUrl = getSiteUrl();
 
 export const metadata = createSeoMetadata({
-  title: "Privacy Policy | Gurgaon Painters",
+  title: "Privacy | Gurgaon Painters",
   description:
     "Read how Gurgaon Painters by Home Glazer handles enquiry details, WhatsApp contact and the essential cookie used on this website.",
   ...(siteUrl
@@ -60,7 +65,12 @@ const sections = [
         may be handled by the Home Glazer team so they can respond. When you
         choose to send an enquiry through WhatsApp, the information is also
         handled by WhatsApp under its own terms and privacy policy. We do not
-        control how third-party services process information.
+        control how third-party services process information. The contact page
+        embeds Google Maps to show Home Glazer&apos;s public Faridabad address;
+        Google may receive technical information when the map loads. Google
+        Analytics receives page-use and interaction events to measure website performance;
+        those events do not include the name, phone number, project message, or
+        WhatsApp message text entered in the enquiry form.
       </p>
     ),
   },
@@ -73,8 +83,12 @@ const sections = [
           homeglazer-cookie-notice
         </code>
         to remember when you have dismissed the cookie notice. It expires after
-        180 days. Analytics and advertising cookies are not currently enabled.
-        You can remove cookies in your browser settings. See our{" "}
+        180 days. Google Analytics (GA4) also measures page usage and selected
+        interactions, including enquiry submissions, phone-link clicks, and
+        WhatsApp-link clicks. Analytics events do not include enquiry names,
+        phone numbers, project messages, or WhatsApp message text. Google
+        Analytics may store analytics cookies. Advertising cookies are not
+        enabled. You can remove cookies in your browser settings. See our{" "}
         <Link
           className="font-semibold text-[#c2410c] underline underline-offset-4"
           href="/cookies"
@@ -106,11 +120,11 @@ const sections = [
           Glazer:
         </p>
         <address className="mt-3 not-italic">
-          B-474, Basement, Greenfield Colony, Faridabad, Haryana - 121010
+          {BUSINESS_ADDRESS}
           <br />
-          Phone: <a href="tel:+919717256514">+91 97172 56514</a>
+          Phone: <a href="tel:+919717256514">{BUSINESS_PHONE}</a>
           <br />
-          Email: <a href="mailto:homeglazer@gmail.com">homeglazer@gmail.com</a>
+          Email: <a href={`mailto:${BUSINESS_EMAIL}`}>{BUSINESS_EMAIL}</a>
         </address>
       </>
     ),
@@ -142,7 +156,7 @@ export default function PrivacyPolicyPage() {
               share when you ask about our painting services.
             </p>
             <p className="mt-3 text-sm text-[#817a6e]">
-              Last updated: October 21, 2026
+              Last updated: October 29, 2026
             </p>
           </header>
 

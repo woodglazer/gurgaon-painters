@@ -1,7 +1,7 @@
 "use client";
 
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 
 const reviews = [
   {
@@ -94,6 +94,28 @@ const reviews = [
   },
 ];
 
+function subscribeToHydration() {
+  return () => {};
+}
+
+function subscribeToMotionPreference(onChange) {
+  const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+  mediaQuery.addEventListener("change", onChange);
+  return () => mediaQuery.removeEventListener("change", onChange);
+}
+
+function getClientSnapshot() {
+  return true;
+}
+
+function getServerSnapshot() {
+  return false;
+}
+
+function getMotionPreference() {
+  return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+}
+
 function getInitials(name) {
   return name
     .split(" ")
@@ -141,6 +163,22 @@ export default function Reviews() {
   const secondSetRef = useRef(null);
   const pauseAutoScrollRef = useRef(false);
   const resumeTimerRef = useRef(null);
+  const isCloned = useSyncExternalStore(
+    subscribeToHydration,
+    getClientSnapshot,
+    getServerSnapshot,
+  );
+  const prefersReducedMotion = useSyncExternalStore(
+    subscribeToMotionPreference,
+    getMotionPreference,
+    getServerSnapshot,
+  );
+  const [userPaused, setUserPaused] = useState(false);
+  const isPaused = userPaused || prefersReducedMotion;
+
+  useEffect(() => {
+    pauseAutoScrollRef.current = isPaused;
+  }, [isPaused]);
 
   useEffect(() => {
     const rail = railRef.current;
@@ -173,11 +211,17 @@ export default function Reviews() {
   }, []);
 
   function pauseThenResume() {
-    pauseAutoScrollRef.current = true;
+    setUserPaused(true);
     window.clearTimeout(resumeTimerRef.current);
     resumeTimerRef.current = window.setTimeout(() => {
-      pauseAutoScrollRef.current = false;
+      setUserPaused(false);
     }, 3500);
+  }
+
+  function toggleAutoScroll() {
+    if (prefersReducedMotion) return;
+    window.clearTimeout(resumeTimerRef.current);
+    setUserPaused((paused) => !paused);
   }
 
   function scrollReviews(direction) {
@@ -211,11 +255,24 @@ export default function Reviews() {
             What our customers say
           </h2>
           <p className="mx-auto mt-4 max-w-2xl text-sm leading-6 text-[#69645b] sm:text-base sm:leading-7">
-            Feedback from customers who trusted Home Glazer with their painting projects.
+            Feedback from Home Glazer customers. Individual reviews may describe projects outside Gurgaon.
           </p>
         </header>
 
           <div className="mb-3 flex justify-end gap-2">
+          <button
+            type="button"
+            onClick={toggleAutoScroll}
+            aria-pressed={isPaused}
+            disabled={prefersReducedMotion}
+            className="mr-auto rounded-full border border-[#29251f]/15 px-4 text-sm font-semibold text-[#29251f] transition-colors hover:border-[#c2410c] hover:text-[#c2410c] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#c2410c]"
+          >
+            {prefersReducedMotion
+              ? "Paused for reduced motion"
+              : isPaused
+                ? "Play reviews"
+                : "Pause reviews"}
+          </button>
           <button
             type="button"
             onClick={() => scrollReviews(-1)}
@@ -238,15 +295,15 @@ export default function Reviews() {
           ref={railRef}
           className="reviews-scrollbar relative flex gap-4 overflow-x-auto overflow-y-hidden pb-2"
           style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
-          onFocus={() => { pauseAutoScrollRef.current = true; }}
+          onFocus={() => setUserPaused(true)}
           onBlur={(event) => {
-            if (!event.currentTarget.contains(event.relatedTarget)) pauseAutoScrollRef.current = false;
+            if (!event.currentTarget.contains(event.relatedTarget)) setUserPaused(false);
           }}
           role="region"
           aria-label="Customer review carousel"
           tabIndex={0}
         >
-          {[false, true].map((isClone) => (
+          {[false, ...(isCloned ? [true] : [])].map((isClone) => (
             <div
               key={isClone ? "review-loop" : "reviews"}
               ref={isClone ? secondSetRef : null}
@@ -262,7 +319,7 @@ export default function Reviews() {
         </div>
 
         <p className="mt-2 text-center text-xs text-[#777166]">
-          Reviews scroll automatically. Hover to pause, or swipe to browse.
+          Reviews scroll automatically. Use the pause button or swipe to browse.
         </p>
       </div>
     </section>

@@ -5,7 +5,14 @@ import { getSiteUrl } from "./site-url";
 import ScrollReveal from "./components/ScrollReveal";
 import CookieNotice from "./components/CookieNotice";
 import WhatsAppButton from "./components/WhatsAppButton";
-import { createSeoMetadata } from "./seo";
+import AnalyticsEvents from "./components/AnalyticsEvents";
+import { BRAND_NAME, createSeoMetadata } from "./seo";
+import { areas } from "./areas/areas";
+import {
+  BUSINESS_ADDRESS_DETAILS,
+  BUSINESS_EMAIL,
+  BUSINESS_PHONE,
+} from "@/lib/business-contact";
 
 const siteUrl = getSiteUrl();
 
@@ -21,52 +28,68 @@ const poppins = Poppins({
 });
 
 const rootSeo = createSeoMetadata({
-  title: "House Painters in Gurgaon | Gurgaon Painters",
-  description: "Looking for painters in Gurgaon? Home Glazer handles interior and exterior painting, wall textures, waterproofing, and wood and metal finishes for homes and businesses.",
+  title: "Painters in Gurgaon | Gurgaon Painters",
+  description: "Painters in Gurgaon for homes and businesses: interior, exterior, textures, waterproofing and wood finishes. Request a free site visit from our team.",
   openGraph: {
     type: "website",
     locale: "en_IN",
-    siteName: "Gurgaon Painters",
-    title: "House Painters in Gurgaon | Gurgaon Painters",
-    description: "Interior and exterior painting, wall textures, waterproofing, and wood and metal finishes for homes and businesses in Gurgaon.",
+    siteName: BRAND_NAME,
+    title: "Painters in Gurgaon | Gurgaon Painters",
+    description: "Painters in Gurgaon for homes and businesses: interior, exterior, textures, waterproofing and wood finishes. Request a free site visit from our team.",
     ...(siteUrl ? { url: siteUrl, images: ["/images/hero-image-two.webp"] } : {}),
   },
   twitter: {
     card: "summary_large_image",
-    title: "House Painters in Gurgaon | Gurgaon Painters",
-    description: "Painting for Gurgaon homes and businesses: interiors, exteriors, wall textures, waterproofing, and wood and metal finishes.",
+    title: "Painters in Gurgaon | Gurgaon Painters",
+    description: "Painters in Gurgaon for homes and businesses: interior, exterior, textures, waterproofing and wood finishes. Request a free site visit from our team.",
     ...(siteUrl ? { images: ["/images/hero-image-two.webp"] } : {}),
   },
 });
 
 export const metadata = {
   ...rootSeo,
-  metadataBase: siteUrl ? new URL(siteUrl) : undefined,
+  metadataBase: new URL(siteUrl || "https://www.gurgaonpainters.com"),
   title: { default: rootSeo.title.absolute, template: "%s" },
-  applicationName: "Gurgaon Painters",
-  keywords: [
-    "painters in Gurgaon",
-    "painters in Gurugram",
-    "painting services in Gurgaon",
-    "house painting services Gurgaon",
-    "home painting Gurgaon",
-    "interior painting Gurgaon",
-    "exterior painting Gurgaon",
-    "wall texture painting Gurgaon",
-    "waterproofing services Gurgaon",
-    "wood polish Gurgaon",
-    "commercial painting Gurgaon",
-    "painting contractor Gurgaon",
-  ],
+  applicationName: BRAND_NAME,
 };
 
 export default function RootLayout({ children }) {
+  const businessSchema = siteUrl
+    ? {
+        "@context": "https://schema.org",
+        "@type": "HousePainter",
+        "@id": `${siteUrl}/#local-business`,
+        name: BRAND_NAME,
+        url: siteUrl,
+        logo: `${siteUrl}/gurgaon-painters-logo-transparent.png`,
+        image: `${siteUrl}/images/hero-image-two.webp`,
+        telephone: BUSINESS_PHONE,
+        email: BUSINESS_EMAIL,
+        address: {
+          "@type": "PostalAddress",
+          ...BUSINESS_ADDRESS_DETAILS,
+        },
+        areaServed: [
+          { "@type": "City", name: "Gurugram", alternateName: "Gurgaon" },
+          ...areas.map(({ name }) => ({ "@type": "Place", name })),
+        ],
+      }
+    : null;
+
   return (
     <html lang="en-IN" className={`${spaceGrotesk.variable} ${poppins.variable} h-full antialiased`}>
-      <body className="min-h-full flex flex-col">
+      <body className="min-h-full flex flex-col pb-16 md:pb-0">
         {children}
+        {businessSchema && (
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{
+              __html: JSON.stringify(businessSchema).replace(/</g, "\\u003c"),
+            }}
+          />
+        )}
         <Script
-          src="https://www.googletagmanager.com/gtag/js?id=G-97JCZ7L7L2"
+          src="https://www.googletagmanager.com/gtag/js?id=G-WVX3B89NZY"
           strategy="afterInteractive"
         />
         <Script id="google-analytics" strategy="afterInteractive">
@@ -74,12 +97,32 @@ export default function RootLayout({ children }) {
             window.dataLayer = window.dataLayer || [];
             function gtag(){window.dataLayer.push(arguments);}
             gtag('js', new Date());
-            gtag('config', 'G-97JCZ7L7L2');
+            gtag('config', 'G-WVX3B89NZY');
           `}
         </Script>
         <ScrollReveal />
+        <AnalyticsEvents />
         <CookieNotice />
         <WhatsAppButton />
+        <nav
+          aria-label="Quick contact options"
+          className="fixed inset-x-0 bottom-0 z-40 grid grid-cols-3 border-t border-slate-200 bg-white/95 pb-[env(safe-area-inset-bottom)] text-center text-xs font-bold text-[#0B1F4D] shadow-[0_-8px_24px_rgba(15,23,42,0.12)] md:hidden"
+        >
+          <a href="tel:+919717256514" className="flex min-h-14 items-center justify-center px-2">
+            Call
+          </a>
+          <a
+            href="https://wa.me/919717256514?text=Hello%20Gurgaon%20Painters%2C%20I%20would%20like%20to%20discuss%20a%20painting%20project."
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex min-h-14 items-center justify-center border-x border-slate-200 px-2"
+          >
+            WhatsApp
+          </a>
+          <a href="/contact" className="flex min-h-14 items-center justify-center px-2 text-[#c2410c]">
+            Get Quote
+          </a>
+        </nav>
       </body>
     </html>
   );

@@ -1,8 +1,14 @@
 "use client";
 
-import { ArrowUpRight, Phone } from "lucide-react";
+import { ArrowUpRight, Mail, Phone } from "lucide-react";
 import { useState } from "react";
 import { ENQUIRY_SERVICES } from "@/lib/enquiry-config";
+import Link from "next/link";
+import {
+  BUSINESS_EMAIL,
+  BUSINESS_PHONE,
+  BUSINESS_PHONE_HREF,
+} from "@/lib/business-contact";
 
 export default function Contact() {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -50,6 +56,13 @@ export default function Contact() {
         throw new Error(result.error || "We could not save your enquiry.");
       }
 
+      if (typeof window.gtag === "function") {
+        window.gtag("event", "generate_lead", {
+          service: formData.get("service"),
+          method: "enquiry_form",
+        });
+      }
+
       form.reset();
       setFormMessage("Your enquiry has been saved. Continue in WhatsApp to send it.");
       if (whatsappWindow) {
@@ -91,13 +104,22 @@ export default function Contact() {
             apartment, office, or shop.
           </p>
           <a
-            href="tel:+919717256514"
+            href={BUSINESS_PHONE_HREF}
             className="mt-7 inline-flex items-center gap-3 text-sm font-semibold text-[#29251f] transition-colors hover:text-[#c2410c]"
           >
             <span className="flex h-10 w-10 items-center justify-center rounded-full bg-white text-[#c2410c] shadow-sm">
               <Phone size={17} strokeWidth={1.7} aria-hidden="true" />
             </span>
-            +91 97172 56514
+            {BUSINESS_PHONE}
+          </a>
+          <a
+            href={`mailto:${BUSINESS_EMAIL}`}
+            className="mt-4 inline-flex items-center gap-3 text-sm font-semibold text-[#29251f] transition-colors hover:text-[#c2410c]"
+          >
+            <span className="flex h-10 w-10 items-center justify-center rounded-full bg-white text-[#c2410c] shadow-sm">
+              <Mail size={17} strokeWidth={1.7} aria-hidden="true" />
+            </span>
+            {BUSINESS_EMAIL}
           </a>
         </div>
 
@@ -170,8 +192,12 @@ export default function Contact() {
             <ArrowUpRight size={17} aria-hidden="true" />
           </button>
           <p className="mt-3 text-center text-xs leading-5 text-[#817a6e]">
-            Your details are saved so our team can follow up. WhatsApp opens for
-            you to review and send the message.
+            We save your details to respond to your request. WhatsApp opens for
+            you to review and send the message. See our{" "}
+            <Link href="/privacy-policy" className="font-semibold underline underline-offset-2">
+              Privacy Policy
+            </Link>
+            .
           </p>
           {formError && (
             <p role="alert" className="mt-3 text-sm text-red-700">

@@ -10,6 +10,34 @@ import { serviceFaqs } from "../../components/page-faqs";
 import { createSeoMetadata } from "../../seo";
 import Breadcrumbs from "../../components/Breadcrumbs";
 import { servicePageContent } from "../service-page-content";
+import { BRAND_NAME } from "../../seo";
+
+const relatedGuides = {
+  "interior-painting-gurgaon": {
+    title: "How to choose the right paint finish for each room",
+    slug: "choose-paint-finish-for-each-room",
+  },
+  "exterior-painting-gurgaon": {
+    title: "What to check before repainting your home's exterior",
+    slug: "exterior-house-repainting-checklist-gurgaon",
+  },
+  "wall-texture-painting-gurgaon": {
+    title: "How to choose the right paint finish for each room",
+    slug: "choose-paint-finish-for-each-room",
+  },
+  "waterproofing-services-gurgaon": {
+    title: "Early signs that a wall may need waterproofing",
+    slug: "early-signs-wall-waterproofing-gurgaon",
+  },
+  "wood-metal-painting-polish-gurgaon": {
+    title: "How to choose the right paint finish for each room",
+    slug: "choose-paint-finish-for-each-room",
+  },
+  "commercial-painting-gurgaon": {
+    title: "What to check before repainting your property's exterior",
+    slug: "exterior-house-repainting-checklist-gurgaon",
+  },
+};
 
 export function generateStaticParams() {
   return services.map(({ slug }) => ({ slug }));
@@ -41,10 +69,9 @@ export default async function ServicePage({ params }) {
     "@context": "https://schema.org",
     "@graph": [
       {
-        "@type": "LocalBusiness",
+        "@type": "HousePainter",
         "@id": siteUrl ? `${siteUrl}/#local-business` : "#local-business",
-        name: "Gurgaon Painters",
-        alternateName: "Gurgaon Painters by Home Glazer",
+        name: BRAND_NAME,
         telephone: "+91 97172 56514",
         ...(siteUrl ? { url: siteUrl } : {}),
         areaServed: {
@@ -143,6 +170,15 @@ export default async function ServicePage({ params }) {
             <ul className="mt-4 flex flex-wrap gap-x-6 gap-y-3">
               {services.filter(({ slug: otherSlug }) => otherSlug !== service.slug).map((other) => <li key={other.slug}><Link className="text-sm font-semibold text-[#c2410c] hover:underline" href={`/services/${other.slug}`}>{other.shortTitle} →</Link></li>)}
             </ul>
+          </nav>
+          <nav aria-label="Related painting guides" className="mt-8 border-t border-[#29251f]/15 pt-6">
+            <h2 className="text-xl font-semibold text-[#29251f]">Related painting guide</h2>
+            <Link
+              className="mt-3 inline-flex text-sm font-semibold text-[#c2410c] hover:underline"
+              href={`/blog/${relatedGuides[service.slug].slug}`}
+            >
+              {relatedGuides[service.slug].title} →
+            </Link>
           </nav>
         </div>
       </article>

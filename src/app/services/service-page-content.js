@@ -272,4 +272,138 @@ export const servicePageContent = {
       ],
     },
   ],
+  "wood-metal-painting-polish-gurgaon": [
+    {
+      heading: "Identify the material and existing finish first",
+      paragraphs: [
+        "A wooden door, a veneered cabinet, a steel railing and an aluminium frame are not interchangeable surfaces. Their current coatings, wear, exposure and intended use affect which preparation and finish can be considered. Before discussing a colour or polish, make a list of the objects and note where the finish is peeling, scratched, faded or showing corrosion.",
+        "Some pieces may have a clear coating that can be cleaned and refreshed, while others may need more extensive preparation or a change in appearance. The site assessment should establish what the surface is made of and whether an existing layer is sound. If the material or coating is uncertain, ask for a small test area before confirming the finish across the whole item.",
+      ],
+      items: [
+        "Interior doors, frames, wardrobes, furniture and selected wooden fittings.",
+        "Metal gates, railings, grills, frames and fixtures exposed indoors or outdoors.",
+        "Surfaces with worn polish, flaking paint, scratches, rust marks or previous repairs.",
+        "Items that need a colour change as well as surfaces that only need refreshing.",
+      ],
+    },
+    {
+      heading: "Choose an appearance that suits the material and use",
+      paragraphs: [
+        "A finish should work with the material, the surrounding space and how often the surface is handled. Wood can be finished to show its grain or with an opaque colour, depending on its condition and the selected product system. Metal may need a protective coating suited to its exposure and the preparation it receives. The specific product label and technical guidance should determine suitability rather than a general assumption about a material.",
+        "Compare sheen and colour in the actual room or near the exterior surface. A glossy finish reflects more light and may make surface irregularities more noticeable, while a lower-sheen appearance can look softer. Existing furniture, flooring, doors and wall colours are useful references. Confirm whether the intended result is to preserve the grain, change the colour, or create a uniform painted surface.",
+      ],
+    },
+    {
+      heading: "Preparation affects how the finish looks and lasts",
+      paragraphs: [
+        "Dust, grease, loose coating and corrosion can interfere with a new finish. Preparation may involve cleaning, scraping, sanding, filling small defects, treating rust or applying a suitable primer, but the appropriate steps depend on the material and existing coating. Ask which of these tasks are included in the written scope and whether damaged wood, loose hardware or deeper repairs need a separate specialist.",
+        "Sanding and coating can create dust or odour. Agree how nearby floors, furniture, glass, plants and hardware will be protected, and whether an item needs to be moved or removed before work. For a fitted door or railing, clarify how access and temporary use will be handled. Work should follow the selected product's instructions for surface condition, ventilation and drying.",
+      ],
+    },
+    {
+      heading: "How a wood and metal finishing project can be planned",
+      steps: [
+        "List each door, furniture item, gate, railing or fixture to be included and mark any visible damage.",
+        "During the site visit, identify materials, existing coatings, access, exposure and nearby surfaces that need protection.",
+        "Discuss whether the goal is to retain the grain, refresh a clear finish, apply an opaque colour or protect bare metal.",
+        "Review a written scope covering preparation, repairs, primer, finish coats, colours, protection and exclusions.",
+        "Agree on a sample or test patch when the existing coating or expected colour needs to be checked.",
+        "Allow application and drying to follow the selected product's instructions before surfaces are handled or returned to use.",
+        "At handover, review the agreed items and ask for the product and care information to keep for future maintenance.",
+      ],
+    },
+    {
+      heading: "Consider dust, sun and monsoon exposure in Gurgaon",
+      paragraphs: [
+        "Outdoor gates and railings may face direct sunlight, airborne dust and seasonal rain, while indoor furniture is affected more by handling, cleaning and room conditions. These differences matter when comparing a finish for a balcony railing with one for a bedroom door. Rainwater collecting at joints or rust developing beneath a coating should be assessed before another layer is applied.",
+        "Dust can settle on a surface during preparation, and changing humidity can affect drying. The work schedule should be discussed in light of site conditions and the product guidance. In apartment communities and builder-floor properties, confirm access, working hours and any rules for moving equipment or temporarily blocking a shared passage before scheduling.",
+      ],
+    },
+    {
+      heading: "Keep finished surfaces in good condition",
+      paragraphs: [
+        "Care instructions vary by coating. Use the cleaning method recommended for the product and avoid abrasive pads or strong cleaners unless the manufacturer says they are suitable. For outdoor metal, periodically look for chips, rust marks and water collecting around joints; for frequently handled wood, check for scratches or worn edges before moisture reaches the underlying material.",
+        "Keep a record of the colour, product system and application date if these details are provided at handover. This makes later touch-up discussions more precise. A new finish cannot correct loose hinges, swollen wood, active leaks or structural corrosion by itself, so resolve those issues separately where required.",
+      ],
+    },
+    {
+      heading: "Questions to settle before approving the quote",
+      items: [
+        "Which items and surfaces are included, and which are excluded?",
+        "What cleaning, sanding, rust treatment, filling or primer is proposed?",
+        "Will the selected finish preserve the wood grain or cover it with colour?",
+        "How will nearby surfaces and hardware be protected?",
+        "What drying and handling guidance applies to the actual product?",
+        "Are repairs beyond surface preparation included or referred to another specialist?",
+      ],
+      closing: "Gurgaon Painters by Home Glazer provides wood and metal finishing for properties across Gurgaon (Gurugram). Share the item list and property location to confirm availability and discuss a site visit.",
+    },
+  ],
+  "commercial-painting-gurgaon": [
+    {
+      heading: "Define the areas and operating needs",
+      paragraphs: [
+        "Commercial painting can involve an office, retail unit, clinic, apartment common area, warehouse or another workplace. Each space has different access, cleaning, appearance and operating requirements. Start with a clear list of rooms and surfaces, such as reception walls, corridors, ceilings, stairwells, exterior facades or service areas, and identify whether the work is a refresh or part of a larger renovation.",
+        "For an occupied property, note when each area is used and which routes need to remain open. A phased scope may help discuss access with staff, tenants, customers or building management, but its feasibility depends on the property and team schedule. Clarify who will approve colours, provide keys or arrange access before a quote is finalised.",
+      ],
+      items: [
+        "Offices, meeting rooms, reception areas and shared corridors.",
+        "Shops, studios, clinics and customer-facing interiors.",
+        "Apartment lobbies, staircases, boundary walls and other shared spaces.",
+        "Interior and exterior surfaces with separate access or coating requirements.",
+      ],
+    },
+    {
+      heading: "Plan the scope around work hours and access",
+      paragraphs: [
+        "Before scheduling, discuss the building's permitted work hours, visitor access, lift use, loading areas and any noise or odour constraints. Offices may have quieter periods, while retail or customer-facing spaces may need work zones kept separate from normal foot traffic. These arrangements should be confirmed with the property contact; do not assume that night or weekend work is available.",
+        "For larger buildings, identify who coordinates with the RWA, facility manager or security desk and how notices will reach occupants. Agree on material storage, waste removal and protection for shared passages. The quote should state which areas are included and how a change in access or work area could affect the sequence.",
+      ],
+    },
+    {
+      heading: "Match the proposed finish to the space",
+      paragraphs: [
+        "A finish suitable for a private office may not be the best fit for a busy corridor, a shopfront or an exterior wall. Consider how visible marks will be, how often the area is cleaned, the light in the room and the appearance expected by customers or residents. Ask the contractor to identify the product system proposed for each surface and provide the manufacturer's guidance for use and care.",
+        "Different substrates can be present in one property: plaster walls, ceilings, metal frames, doors, railings and previously coated surfaces. Each may need different preparation and a compatible primer or finish. Where colour consistency matters across rooms or stages, confirm the shade reference and keep a record of the selected product and batch details where available.",
+      ],
+    },
+    {
+      heading: "Prepare the workplace before painting",
+      paragraphs: [
+        "Move or cover furniture, equipment, signs and stock according to the agreed plan. Protect computers, electrical fittings, flooring, glass, counters and customer property. Discuss who disconnects or moves sensitive equipment; painting teams should not be assumed to handle IT, electrical or specialist installations unless that work is explicitly included and appropriately arranged.",
+        "Surface preparation should reflect what is found on site. Loose paint, cracks, stains, damaged plaster or moisture marks may need separate attention before a new finish is applied. Include these items, or clearly exclude them, in the scope. If a surface may contain hazardous material or has a structural defect, pause and seek an appropriate specialist rather than treating it as ordinary painting preparation.",
+      ],
+    },
+    {
+      heading: "How a commercial painting scope can work",
+      steps: [
+        "Share the property type, approximate work areas, operating schedule and building access requirements.",
+        "Walk through the site with the responsible contact to review surfaces, repairs, furniture and shared access.",
+        "Agree on a written scope that identifies areas, preparation, products, coats, protection, clean-up and exclusions.",
+        "Confirm a work sequence, site contact, access arrangements and how changes or newly discovered repairs will be approved.",
+        "Prepare each work zone and apply the selected system in line with its product instructions and site conditions.",
+        "Review the completed areas against the agreed scope and record any agreed touch-ups or outstanding items.",
+        "Share care and re-entry guidance for the specific products used before returning the area to normal use.",
+      ],
+    },
+    {
+      heading: "Account for Gurgaon buildings and monsoon conditions",
+      paragraphs: [
+        "Offices and shops in Gurgaon may operate inside managed commercial buildings, while apartment common areas are often subject to society rules. Confirm permissions, working-hour limits, service-lift arrangements and safe access with the responsible building contact. For facade or elevated work, access and safety planning need particular attention and should be covered in the site-specific scope.",
+        "Dust, heat and monsoon humidity can affect when surfaces are suitable for coating and how products dry. The manufacturer's technical instructions and conditions at the property should guide the timing. A calendar estimate should not replace checking whether a surface is ready or whether the building can provide the agreed access.",
+      ],
+    },
+    {
+      heading: "A handover checklist for property managers",
+      items: [
+        "Confirm the finished rooms and surfaces against the approved scope.",
+        "Check that protective coverings and project materials have been removed as agreed.",
+        "List any approved touch-ups or repairs that remain outstanding.",
+        "Record colours, product details and care guidance where supplied.",
+        "Share maintenance information with the facility team or future property manager.",
+        "Confirm that occupants can use the spaces under the selected products' instructions.",
+      ],
+      closing: "Gurgaon Painters by Home Glazer discusses commercial painting for offices, shops and shared properties across Gurgaon (Gurugram). Share the site address, access rules and work areas to confirm service availability and arrange a visit.",
+    },
+  ],
 };

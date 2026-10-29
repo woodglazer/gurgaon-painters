@@ -4,7 +4,11 @@ export function getSiteUrl() {
     process.env.VERCEL_PROJECT_PRODUCTION_URL ||
     process.env.VERCEL_URL;
 
-  if (!configuredUrl) return null;
+  if (!configuredUrl) {
+    return process.env.NODE_ENV === "production"
+      ? "https://www.gurgaonpainters.com"
+      : null;
+  }
 
   return configuredUrl.startsWith("http")
     ? configuredUrl.replace(/\/$/, "")

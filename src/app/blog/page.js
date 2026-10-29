@@ -2,24 +2,30 @@ import Image from "next/image";
 import Link from "next/link";
 import Footer from "../components/Footer";
 import Navbar from "../components/navbar";
-import { articles } from "./articles";
+import { getPublishedBlogPosts } from "@/lib/blogs";
+import { connection } from "next/server";
 import { getSiteUrl } from "../site-url";
 import PageFAQs from "../components/PageFAQs";
 import { pageFaqs } from "../components/page-faqs";
 import { createSeoMetadata } from "../seo";
 import Breadcrumbs from "../components/Breadcrumbs";
 
+export const instant = false;
+
 const siteUrl = getSiteUrl();
 
 export const metadata = createSeoMetadata({
-  title: "Gurgaon Painting Guides | Gurgaon Painters",
+  title: "Painting Guides Gurgaon | Gurgaon Painters",
   description: "Practical painting guides for Gurgaon: choosing interior paint finishes, preparing an exterior repaint, and spotting signs of moisture before painting.",
   ...(siteUrl ? { alternates: { canonical: `${siteUrl}/blog` } } : {}),
   openGraph: { url: siteUrl ? `${siteUrl}/blog` : undefined, type: "website" },
   twitter: { card: "summary_large_image" },
 });
 
-export default function BlogPage() {
+export default async function BlogPage() {
+  await connection();
+  const articles = await getPublishedBlogPosts();
+
   return (
     <main className="relative min-h-screen bg-[#f6f6f4]">
       <Navbar />

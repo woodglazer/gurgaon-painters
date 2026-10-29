@@ -2,7 +2,7 @@ export const services = [
   {
     slug: "interior-painting-gurgaon",
     title: "Interior Painting in Gurgaon",
-    seoTitle: "Interior Painting in Gurgaon - Gurgaon Painters",
+    seoTitle: "Interior Painting Gurgaon | Gurgaon Painters",
     h1: "Interior Painting Services in Gurgaon",
     shortTitle: "Interior Painting",
     description: "Interior painting in Gurgaon for flats, villas, builder floors and offices. Surface preparation, colour guidance and a clean finish. Free site visit.",
@@ -14,7 +14,7 @@ export const services = [
   {
     slug: "exterior-painting-gurgaon",
     title: "Exterior Painting in Gurgaon",
-    seoTitle: "Exterior Painting in Gurgaon - Gurgaon Painters",
+    seoTitle: "Exterior Painting Gurgaon | Gurgaon Painters",
     h1: "Exterior Painting Services in Gurgaon",
     shortTitle: "Exterior Painting",
     description: "Exterior painting in Gurgaon for homes and buildings. Facade inspection, agreed repairs and weather-suitable coatings. Book a free site visit.",
@@ -26,7 +26,7 @@ export const services = [
   {
     slug: "wall-texture-painting-gurgaon",
     title: "Wall Texture Painting in Gurgaon",
-    seoTitle: "Wall Texture Painting in Gurgaon - Gurgaon Painters",
+    seoTitle: "Wall Texture Painting Gurgaon | Gurgaon Painters",
     h1: "Wall Texture Painting Services in Gurgaon",
     shortTitle: "Wall Textures",
     description: "Wall texture painting in Gurgaon for feature walls, homes and offices. Review samples, prepare the wall and plan a neat finish. Free site visit.",
@@ -38,7 +38,7 @@ export const services = [
   {
     slug: "waterproofing-services-gurgaon",
     title: "Waterproofing Services in Gurgaon",
-    seoTitle: "Waterproofing Services in Gurgaon - Gurgaon Painters",
+    seoTitle: "Waterproofing Gurgaon | Gurgaon Painters",
     h1: "Waterproofing Services in Gurgaon",
     shortTitle: "Waterproofing",
     description: "Waterproofing services in Gurgaon for terraces, damp walls and exposed surfaces. Source-first assessment, suitable treatment and clear scope. Free site visit.",
@@ -50,7 +50,7 @@ export const services = [
   {
     slug: "wood-metal-painting-polish-gurgaon",
     title: "Wood & Metal Painting and Polishing in Gurgaon",
-    seoTitle: "Wood & Metal Finishes in Gurgaon - Gurgaon Painters",
+    seoTitle: "Wood & Metal Finishes Gurgaon | Gurgaon Painters",
     shortTitle: "Wood & Metal Finishes",
     description: "Wood polishing and metal painting in Gurgaon for doors, furniture, railings, and fittings, planned for each material and its condition.",
     image: "/images/service-wood-metal.webp",
@@ -65,7 +65,7 @@ export const services = [
   {
     slug: "commercial-painting-gurgaon",
     title: "Commercial Painting in Gurgaon",
-    seoTitle: "Commercial Painting in Gurgaon - Gurgaon Painters",
+    seoTitle: "Commercial Painting Gurgaon | Gurgaon Painters",
     shortTitle: "Commercial Painting",
     description: "Commercial painting in Gurgaon for offices, shops, apartment buildings, and shared spaces, with work planned around site access and use.",
     image: "/images/service-commercial.webp",

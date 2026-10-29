@@ -6,7 +6,7 @@ import Link from "next/link";
 
 const slides = [
   {
-    title: "Luxury Exterior Painting in Gurgaon",
+    title: "Painters in Gurgaon for Homes, Offices & Societies",
     text: "Protect and elevate your property with durable exterior painting, weather-resistant coatings, and elegant curb appeal.",
     image: "/images/hero-image-two.webp",
     imageAlt: "Freshly painted exterior of a modern home in Gurgaon",

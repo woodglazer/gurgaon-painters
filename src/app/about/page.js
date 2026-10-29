@@ -10,7 +10,7 @@ import Breadcrumbs from "../components/Breadcrumbs";
 const siteUrl = getSiteUrl();
 
 export const metadata = createSeoMetadata({
-  title: "About Us | Gurgaon Painters",
+  title: "About | Gurgaon Painters",
   description: "Meet Gurgaon Painters by Home Glazer. Learn how we plan painting, surface preparation, and finishing for homes and businesses in Gurgaon.",
   ...(siteUrl ? { alternates: { canonical: `${siteUrl}/about` } } : {}),
   openGraph: { url: siteUrl ? `${siteUrl}/about` : undefined, type: "website" },
@@ -32,8 +32,8 @@ export default function AboutPage() {
           </h1>
           <p className="mt-6 max-w-2xl text-lg leading-8 text-[#69645b]">
             Gurgaon Painters by Home Glazer helps homeowners and businesses
-            refresh and protect their spaces. Home Glazer reports that it was
-            founded in 2008 and has completed more than 5,000 projects. We serve
+            refresh and protect their spaces. Home Glazer was founded in 2008
+            and has completed more than 5,000 projects. We serve
             residential and commercial projects across Gurgaon (Gurugram).
           </p>
           <dl className="mt-8 grid gap-3 sm:grid-cols-2">

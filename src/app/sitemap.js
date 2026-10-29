@@ -1,34 +1,32 @@
 import { getSiteUrl } from "./site-url";
-import { articles } from "./blog/articles";
 import { services } from "./services/services";
+import { getPublishedBlogPosts } from "@/lib/blogs";
+import { connection } from "next/server";
+import { areas } from "./areas/areas";
 
-export default function sitemap() {
+export default async function sitemap() {
+  await connection();
   const siteUrl = getSiteUrl();
 
   if (!siteUrl) return [];
 
+  const articles = await getPublishedBlogPosts();
+
   return [
-    {
-      url: siteUrl,
-      changeFrequency: "monthly",
-      priority: 1,
-    },
-    { url: `${siteUrl}/about`, changeFrequency: "yearly", priority: 0.6 },
-    { url: `${siteUrl}/why-us`, changeFrequency: "yearly", priority: 0.6 },
-    { url: `${siteUrl}/contact`, changeFrequency: "yearly", priority: 0.7 },
-    { url: `${siteUrl}/cookies`, changeFrequency: "yearly", priority: 0.2 },
-    { url: `${siteUrl}/privacy-policy`, changeFrequency: "yearly", priority: 0.2 },
-    { url: `${siteUrl}/services`, changeFrequency: "monthly", priority: 0.8 },
-    ...services.map(({ slug }) => ({
-      url: `${siteUrl}/services/${slug}`,
-      changeFrequency: "yearly",
-      priority: 0.8,
-    })),
-    { url: `${siteUrl}/blog`, changeFrequency: "monthly", priority: 0.7 },
-    ...articles.map(({ slug }) => ({
+    { url: siteUrl },
+    { url: `${siteUrl}/about` },
+    { url: `${siteUrl}/why-us` },
+    { url: `${siteUrl}/contact` },
+    { url: `${siteUrl}/cookies` },
+    { url: `${siteUrl}/privacy-policy` },
+    { url: `${siteUrl}/services` },
+    ...services.map(({ slug }) => ({ url: `${siteUrl}/services/${slug}` })),
+    { url: `${siteUrl}/areas` },
+    ...areas.map(({ slug }) => ({ url: `${siteUrl}/areas/${slug}` })),
+    { url: `${siteUrl}/blog` },
+    ...articles.map(({ slug, updatedAt }) => ({
       url: `${siteUrl}/blog/${slug}`,
-      changeFrequency: "yearly",
-      priority: 0.6,
+      lastModified: updatedAt,
     })),
   ];
 }

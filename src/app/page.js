@@ -1,7 +1,6 @@
 import Features from "./components/Features";
 import FAQSection from "./components/FAQSection";
 import Contact from "./components/Contact";
-import Certificates from "./components/Certificates";
 import BlogSection from "./components/BlogSection";
 import Footer from "./components/Footer";
 import Hero from "./components/Hero";
@@ -11,6 +10,7 @@ import Reviews from "./components/Reviews";
 import Services from "./components/Services";
 import VisualizeRoomColor from "./components/VisualizeRoomColor";
 import { getSiteUrl } from "./site-url";
+import { BRAND_NAME } from "./seo";
 
 const siteUrl = getSiteUrl();
 
@@ -32,7 +32,7 @@ export default function Home() {
     "@graph": [
       {
         "@type": "WebSite",
-        name: "Gurgaon Painters",
+        name: BRAND_NAME,
         description: "Interior and exterior painting, wall textures, waterproofing, and wood and metal finishes for homes and businesses in Gurgaon and Gurugram.",
         ...(siteUrl
           ? { url: siteUrl }
@@ -42,7 +42,7 @@ export default function Home() {
       {
         "@type": "Organization",
         "@id": siteUrl ? `${siteUrl}/#organization` : "#organization",
-        name: "Gurgaon Painters",
+        name: BRAND_NAME,
         telephone: "+91 97172 56514",
         parentOrganization: {
           "@type": "Organization",
@@ -67,7 +67,7 @@ export default function Home() {
         provider: {
           "@type": "Organization",
           "@id": siteUrl ? `${siteUrl}/#organization` : "#organization",
-          ...(!siteUrl ? { name: "Gurgaon Painters" } : {}),
+          ...(!siteUrl ? { name: BRAND_NAME } : {}),
         },
       })),
     ],
@@ -87,7 +87,6 @@ export default function Home() {
       <Features />
       <HowWeDoIt />
       <VisualizeRoomColor />
-      <Certificates />
       <Reviews />
       <BlogSection />
       <FAQSection />

@@ -42,6 +42,30 @@ email. Only the configured email can create the admin account or access `/admin`
 Configure both `ADMIN_EMAIL` and `NEON_AUTH_COOKIE_SECRET` in the production
 host's environment variables as well. Never commit or share the cookie secret.
 
+### Managing blog posts
+
+Before deploying the blog admin, apply both migrations in order:
+[`database/migrations/20261026000000_create_blog_posts.sql`](./database/migrations/20261026000000_create_blog_posts.sql)
+and
+[`database/migrations/20261026130000_create_blog_images.sql`](./database/migrations/20261026130000_create_blog_images.sql)
+to the Neon database using the Neon SQL Editor. They create the blog tables and
+the first migration seeds the three existing published painting guides. The admin dashboard blog
+page is available at `/admin/blog`; it supports creating and editing posts,
+saving drafts, publishing or unpublishing posts, and deleting posts. The Quill
+rich-text editor supports headings, text styles, links, lists, quotes, and a
+live formatted view while writing. Cover images can be uploaded as JPEG, PNG,
+or WebP files up to 3 MB, converted to WebP, and stored in the Neon database.
+Published blog images load lazily and posts appear on `/blog` and in the sitemap.
+
+To change the editor toolbar, edit `toolbarOptions` and the `formats` allowlist
+in `src/app/admin/(protected)/blog/quill-editor.jsx`. Add a Quill toolbar format
+such as `"code-block"` or `[{ align: [] }]` to `toolbarOptions`, then allow that
+format in `formats`. Update `src/app/blog/blog-content.jsx` and the format
+validation in `src/app/admin/(protected)/blog/actions.js` before enabling a new
+format, so it can be safely saved and displayed on published posts. See the
+[Quill toolbar module documentation](https://quilljs.com/docs/modules/toolbar)
+for toolbar array syntax and available controls.
+
 You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
