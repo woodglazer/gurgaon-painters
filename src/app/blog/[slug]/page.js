@@ -35,7 +35,6 @@ function formatArticleDate(date) {
   }).format(new Date(date));
 }
 
-export const instant = false;
 
 export async function generateMetadata({ params }) {
   await connection();

@@ -11,22 +11,27 @@ export async function GET(_request, { params }) {
     return new Response("Image not found.", { status: 404 });
   }
 
-  const sql = getDatabaseClient();
-  const images = await sql`
-    SELECT content_type, encode(image_data, 'base64') AS image_base64
-    FROM blog_images
-    WHERE id = ${id}
-    LIMIT 1
-  `;
-  if (!images.length) {
+  try {
+    const sql = getDatabaseClient();
+    const images = await sql`
+      SELECT content_type, encode(image_data, 'base64') AS image_base64
+      FROM blog_images
+      WHERE id = ${id}
+      LIMIT 1
+    `;
+    if (!images.length) {
+      return new Response("Image not found.", { status: 404 });
+    }
+
+    return new Response(Buffer.from(images[0].image_base64, "base64"), {
+      headers: {
+        "Content-Type": images[0].content_type,
+        "Cache-Control": "public, max-age=31536000, immutable",
+        "X-Content-Type-Options": "nosniff",
+      },
+    });
+  } catch (error) {
+    console.error(`Unable to retrieve blog image "${id}":`, error?.message);
     return new Response("Image not found.", { status: 404 });
   }
-
-  return new Response(Buffer.from(images[0].image_base64, "base64"), {
-    headers: {
-      "Content-Type": images[0].content_type,
-      "Cache-Control": "public, max-age=31536000, immutable",
-      "X-Content-Type-Options": "nosniff",
-    },
-  });
 }
