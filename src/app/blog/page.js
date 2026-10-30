@@ -35,7 +35,6 @@ export default async function BlogPage() {
         <div className="mx-auto max-w-6xl">
           <header className="mx-auto max-w-3xl text-center">
             <h1 className="text-5xl font-medium leading-tight tracking-[-0.045em] text-[#29251f] sm:text-6xl">Practical painting advice for Gurgaon homes.</h1>
-            <p className="mx-auto mt-4 max-w-2xl text-sm leading-6 text-[#777166]">Published by Gurgaon Painters by <a href="https://homeglazer.com" target="_blank" rel="noopener noreferrer" className="font-medium text-[#c2410c] hover:underline">Home Glazer</a>. These general guides help with planning; the right materials and repairs depend on an on-site assessment.</p>
           </header>
 
           <div className="mx-auto mt-10 grid max-w-6xl gap-6 md:grid-cols-2 lg:grid-cols-3">
