@@ -17,7 +17,7 @@ const siteUrl = getSiteUrl();
 
 export const metadata = createSeoMetadata({
   title: "Painting Guides Gurgaon | Gurgaon Painters",
-  description: "Practical painting guides for Gurgaon: choosing interior paint finishes, preparing an exterior repaint, and spotting signs of moisture before painting.",
+  description: "Painting guides for Gurgaon: choosing interior finishes, planning exterior repainting, and diagnosing moisture issues. Book a site visit.",
   ...(siteUrl ? { alternates: { canonical: `${siteUrl}/blog` } } : {}),
   openGraph: { url: siteUrl ? `${siteUrl}/blog` : undefined, type: "website" },
   twitter: { card: "summary_large_image" },

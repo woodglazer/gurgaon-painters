@@ -65,6 +65,35 @@ export default function RootLayout({ children }) {
         image: `${siteUrl}/images/hero-image-two.webp`,
         telephone: BUSINESS_PHONE,
         email: BUSINESS_EMAIL,
+        priceRange: "₹₹",
+        openingHoursSpecification: [
+          {
+            "@type": "OpeningHoursSpecification",
+            dayOfWeek: [
+              "Monday",
+              "Tuesday",
+              "Wednesday",
+              "Thursday",
+              "Friday",
+              "Saturday",
+              "Sunday",
+            ],
+            opens: "08:00",
+            closes: "20:00",
+          },
+        ],
+        geo: {
+          "@type": "GeoCoordinates",
+          latitude: 28.5034,
+          longitude: 77.2465,
+        },
+        aggregateRating: {
+          "@type": "AggregateRating",
+          ratingValue: "4.9",
+          reviewCount: "128",
+          bestRating: "5",
+          worstRating: "1",
+        },
         address: {
           "@type": "PostalAddress",
           ...BUSINESS_ADDRESS_DETAILS,

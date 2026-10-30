@@ -41,7 +41,7 @@ export const services = [
     seoTitle: "Waterproofing Gurgaon | Gurgaon Painters",
     h1: "Waterproofing Services in Gurgaon",
     shortTitle: "Waterproofing",
-    description: "Waterproofing services in Gurgaon for terraces, damp walls and exposed surfaces. Source-first assessment, suitable treatment and clear scope. Free site visit.",
+    description: "Waterproofing in Gurgaon for terraces, damp walls and exposed surfaces. Source assessment, reliable treatment and clear scope. Free site visit.",
     image: "/images/service-waterproofing.webp",
     imageAlt: "Protective coating being applied to a rooftop terrace",
     intro: "Recurring damp patches, peeling paint and terrace leakage call for understanding the likely moisture source before choosing a treatment. Gurgaon Painters by Home Glazer provides waterproofing services in Gurgaon and Gurugram for terraces, damp walls and exposed surfaces. A coating alone may not resolve a plumbing, joint or structural issue, so the proposed work should be based on the affected area and site assessment.",

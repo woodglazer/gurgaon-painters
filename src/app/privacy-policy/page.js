@@ -5,9 +5,9 @@ import Link from "next/link";
 import { createSeoMetadata } from "../seo";
 import { getSiteUrl } from "../site-url";
 import {
-  BUSINESS_ADDRESS,
   BUSINESS_EMAIL,
   BUSINESS_PHONE,
+  DISPLAY_ADDRESS,
 } from "@/lib/business-contact";
 
 const siteUrl = getSiteUrl();
@@ -120,7 +120,7 @@ const sections = [
           Glazer:
         </p>
         <address className="mt-3 not-italic">
-          {BUSINESS_ADDRESS}
+          {DISPLAY_ADDRESS}
           <br />
           Phone: <a href="tel:+919717256514">{BUSINESS_PHONE}</a>
           <br />

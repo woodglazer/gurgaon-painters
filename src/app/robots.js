@@ -19,12 +19,12 @@ export default function robots() {
       {
         userAgent: "*",
         allow: "/",
-        disallow: "/api/",
+        disallow: ["/api/", "/admin/"],
       },
       ...aiAgents.map((userAgent) => ({
         userAgent,
         allow: "/",
-        disallow: "/api/",
+        disallow: ["/api/", "/admin/"],
       })),
     ],
     ...(siteUrl ? { sitemap: `${siteUrl}/sitemap.xml` } : {}),

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { createAuthClient } from "@neondatabase/auth/next";
 
@@ -118,6 +119,15 @@ export default function AdminLoginForm({ adminEmail }) {
               {showPassword ? <EyeOffIcon /> : <EyeIcon />}
             </button>
           </div>
+        </div>
+
+        <div className="text-right">
+          <Link
+            href="/admin/forgot-password"
+            className="text-sm font-semibold text-[#c2410c] hover:underline"
+          >
+            Forgot password?
+          </Link>
         </div>
 
         <button

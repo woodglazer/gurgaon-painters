@@ -6,7 +6,7 @@ import PageFAQs from "../components/PageFAQs";
 import { pageFaqs } from "../components/page-faqs";
 import { createSeoMetadata } from "../seo";
 import Breadcrumbs from "../components/Breadcrumbs";
-import { BUSINESS_ADDRESS, BUSINESS_ADDRESS_EMBED_URL } from "@/lib/business-contact";
+import { DISPLAY_ADDRESS } from "@/lib/business-contact";
 
 const siteUrl = getSiteUrl();
 
@@ -34,20 +34,11 @@ export default function ContactPage() {
       >
         <div className="mx-auto max-w-6xl">
           <h2 id="business-address-heading" className="text-2xl font-semibold text-[#29251f]">
-            Home Glazer contact address
+            Service Location
           </h2>
           <address className="mt-3 not-italic text-sm leading-6 text-[#69645b]">
-            {BUSINESS_ADDRESS}
+            {DISPLAY_ADDRESS}
           </address>
-          <div className="mt-5 h-72 overflow-hidden rounded-md border border-[#29251f]/10 sm:h-96">
-            <iframe
-              title="Map to Home Glazer's Faridabad address"
-              src={BUSINESS_ADDRESS_EMBED_URL}
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-              className="h-full w-full border-0"
-            />
-          </div>
         </div>
       </section>
       <PageFAQs faqs={pageFaqs.contact} title="Contact and painting quote FAQs" className="bg-[#f6f6f4]" />
