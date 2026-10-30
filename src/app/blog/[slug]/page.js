@@ -35,9 +35,9 @@ function formatArticleDate(date) {
   }).format(new Date(date));
 }
 
+export const instant = false;
 
 export async function generateMetadata({ params }) {
-  await connection();
   const { slug } = await params;
   const article = await getPublishedBlogPost(slug);
   if (!article) return {};

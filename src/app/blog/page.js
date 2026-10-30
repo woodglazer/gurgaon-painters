@@ -11,6 +11,8 @@ import { createSeoMetadata } from "../seo";
 import Breadcrumbs from "../components/Breadcrumbs";
 
 
+export const instant = false;
+
 const siteUrl = getSiteUrl();
 
 export const metadata = createSeoMetadata({
