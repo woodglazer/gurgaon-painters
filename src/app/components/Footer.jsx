@@ -145,27 +145,34 @@ export default async function Footer() {
         </div>
 
         <section
-          className="mt-8 border-t border-white/10 pt-6"
+          className="mt-10 border-t border-white/10 pt-8"
           aria-labelledby="footer-areas-heading"
         >
-          <h2
-            id="footer-areas-heading"
-            className="text-xs font-semibold uppercase tracking-[0.18em] text-white/50"
-          >
-            Areas We Serve
-          </h2>
-          <ul className="mt-4 grid grid-cols-2 gap-x-5 gap-y-3 sm:grid-cols-3 lg:grid-cols-5">
+          <div className="flex flex-wrap items-center justify-between gap-2">
+            <h2
+              id="footer-areas-heading"
+              className="text-xs font-semibold uppercase tracking-[0.18em] text-white/50"
+            >
+              Areas We Serve in Gurgaon
+            </h2>
+            <Link
+              href="/areas"
+              className="text-xs font-semibold text-[#c2410c] transition-colors hover:text-[#ea580c] hover:underline"
+            >
+              View all areas &rarr;
+            </Link>
+          </div>
+          <div className="mt-5 flex flex-wrap gap-2.5">
             {areas.map((area) => (
-              <li key={area.slug}>
-                <Link
-                  href={`/areas/${area.slug}`}
-                  className="text-sm text-white/65 transition-colors hover:text-white"
-                >
-                  {area.name}
-                </Link>
-              </li>
+              <Link
+                key={area.slug}
+                href={`/areas/${area.slug}`}
+                className="inline-flex items-center rounded-full border border-white/10 bg-white/[0.04] px-3.5 py-1.5 text-xs text-white/70 transition-all duration-200 hover:border-[#c2410c] hover:bg-[#c2410c]/10 hover:text-white"
+              >
+                {area.name}
+              </Link>
             ))}
-          </ul>
+          </div>
         </section>
 
         {/* Divider */}
