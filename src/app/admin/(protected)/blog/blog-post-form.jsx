@@ -108,7 +108,7 @@ export default function BlogPostForm({ post, defaultCity = "gurgaon" }) {
 
       <div>
         <label className={labelClass}>Article content</label>
-        <QuillEditor value={body} onChange={setBody} />
+        <QuillEditor initialValue={body} onChange={setBody} />
         <input type="hidden" name="body" value={body} />
       </div>
 
