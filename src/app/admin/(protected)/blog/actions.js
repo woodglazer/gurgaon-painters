@@ -1,6 +1,6 @@
 "use server";
 
-import { revalidatePath } from "next/cache";
+import { revalidatePath, revalidateTag } from "next/cache";
 import { redirect } from "next/navigation";
 import { getAdminAccess } from "@/lib/auth/admin";
 import { getDatabaseClient } from "@/lib/db";
@@ -75,9 +75,15 @@ function readPost(formData) {
 }
 
 function revalidateBlogPaths(...slugs) {
+  revalidatePath("/", "layout");
   revalidatePath("/admin/blog");
   revalidatePath("/blog");
   revalidatePath("/sitemap.xml");
+  try {
+    revalidateTag("blog_posts");
+  } catch (e) {
+    // ignore
+  }
   for (const slug of slugs) {
     if (slug) {
       revalidatePath(`/blog/${slug}`);
