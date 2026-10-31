@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { redirect } from "next/navigation";
 import { ArrowLeft } from "lucide-react";
 import AdminLoginForm from "./login-form";
 
@@ -9,9 +10,13 @@ export const metadata = {
 };
 
 export default function AdminLoginPage() {
+  if (process.env.NODE_ENV === "development" && !process.env.NEON_AUTH_BASE_URL) {
+    redirect("/admin");
+  }
+
   return (
     <main className="flex min-h-screen items-center justify-center bg-[#f6f6f4] p-4 sm:p-8">
-      <div className="grid w-full max-w-5xl overflow-hidden rounded-md border border-[#e7e2d9] bg-white shadow-[0_24px_80px_rgba(15,31,77,0.12)] md:min-h-[600px] md:grid-cols-2">
+      <div className="grid w-full max-w-5xl overflow-hidden rounded-md border border-[#e7e2d9] bg-white -[0_24px_80px_rgba(15,31,77,0.12)] md:min-h-[600px] md:grid-cols-2">
         <div className="relative hidden min-h-56 flex-col justify-between overflow-hidden bg-[#0B1F4D] p-7 text-white sm:p-10 md:flex md:min-h-full md:p-12">
           <div
             aria-hidden="true"

@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 import {
   LayoutDashboard,
   ClipboardList,
@@ -20,7 +20,9 @@ const navItems = [
 
 export default function AdminSidebar({ width }) {
   const pathname = usePathname();
+  const searchParams = useSearchParams();
   const isCompact = width < 120;
+  const currentCity = searchParams.get("city");
 
   return (
     <aside
@@ -31,10 +33,13 @@ export default function AdminSidebar({ width }) {
         <ul className="space-y-0.5">
           {navItems.map(({ href, label, icon: Icon, exact }) => {
             const isActive = exact ? pathname === href : pathname.startsWith(href);
+            // Retain city param when switching tabs
+            const targetHref = currentCity ? `${href}?city=${currentCity}` : href;
+
             return (
               <li key={href}>
                 <Link
-                  href={href}
+                  href={targetHref}
                   aria-label={isCompact ? label : undefined}
                   title={label}
                   className={`flex items-center rounded-lg py-2.5 text-sm font-medium transition-colors ${

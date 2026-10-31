@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { getAdminAccess } from "@/lib/auth/admin";
 import { getDatabaseClient } from "@/lib/db";
+import { getSelectedAdminCity } from "@/lib/admin-city-cookie";
 
 async function requireAdmin() {
   const access = await getAdminAccess();
@@ -32,57 +33,6 @@ function getBlogBody(formData) {
     return { error: "The article is too long. Shorten it and try again." };
   }
 
-  try {
-    const delta = JSON.parse(body);
-    if (Array.isArray(delta?.ops)) {
-      let textLength = 0;
-      for (const operation of delta.ops) {
-        if (!operation || typeof operation.insert !== "string") {
-          return { error: "The article contains an unsupported content type." };
-        }
-        if (
-          operation.attributes !== undefined &&
-          (!operation.attributes ||
-            typeof operation.attributes !== "object" ||
-            Array.isArray(operation.attributes))
-        ) {
-          return { error: "The article formatting could not be read." };
-        }
-        for (const [format, value] of Object.entries(operation.attributes || {})) {
-          const validFormat =
-            ["bold", "italic", "underline", "strike", "blockquote"].includes(format)
-              ? value === true
-              : format === "link"
-                ? typeof value === "string" && value.length <= 2048
-                : format === "header"
-                  ? value === 2 || value === 3
-                  : format === "list"
-                    ? value === "bullet" || value === "ordered"
-                    : false;
-          if (!validFormat) {
-            return { error: "The article contains unsupported formatting." };
-          }
-        }
-        textLength += operation.insert.length;
-      }
-      if (textLength > 20000) {
-        return { error: "The article must be 20,000 characters or fewer." };
-      }
-      if (!delta.ops.some((operation) => operation.insert.trim())) {
-        return { error: "Article body is required." };
-      }
-      return { body };
-    }
-  } catch {
-    if (body.startsWith("{")) {
-      return { error: "The article formatting could not be read. Please review it and try again." };
-    }
-  }
-
-  if (body.length > 20000) {
-    return { error: "The article must be 20,000 characters or fewer." };
-  }
-
   return body
     ? { body }
     : { error: "Article body is required." };
@@ -104,6 +54,7 @@ function readPost(formData) {
     checks: readText(formData, "checks", 5000),
     image: readText(formData, "image", 500),
     imageAlt: readText(formData, "imageAlt", 250),
+    city: readText(formData, "city", 30) || "gurgaon",
     published: formData.get("published") === "true",
   };
 
@@ -141,6 +92,10 @@ export async function createBlogPost(_previousState, formData) {
     return result;
   }
 
+  // If no city provided in form, use selected city from cookie
+  const activeCity = await getSelectedAdminCity();
+  const targetCity = result.post.city || (activeCity !== "all" ? activeCity : "gurgaon");
+
   const sql = getDatabaseClient();
   const existing = await sql`
     SELECT id FROM blog_posts WHERE slug = ${result.post.slug} LIMIT 1
@@ -152,12 +107,12 @@ export async function createBlogPost(_previousState, formData) {
   await sql`
     INSERT INTO blog_posts (
       slug, category, title, seo_title, description, body, checks, image,
-      image_alt, published
+      image_alt, published, city
     ) VALUES (
       ${result.post.slug}, ${result.post.category}, ${result.post.title},
       ${result.post.seoTitle}, ${result.post.description}, ${result.post.body},
       ${result.post.checks}, ${result.post.image}, ${result.post.imageAlt},
-      ${result.post.published}
+      ${result.post.published}, ${targetCity}
     )
   `;
 
@@ -190,7 +145,8 @@ export async function updateBlogPost(id, _previousState, formData) {
 
   await sql`
     UPDATE blog_posts
-    SET slug = ${result.post.slug},
+    SET
+      slug = ${result.post.slug},
       category = ${result.post.category},
       title = ${result.post.title},
       seo_title = ${result.post.seoTitle},
@@ -200,6 +156,7 @@ export async function updateBlogPost(id, _previousState, formData) {
       image = ${result.post.image},
       image_alt = ${result.post.imageAlt},
       published = ${result.post.published},
+      city = ${result.post.city},
       updated_at = now()
     WHERE id = ${id}
   `;
@@ -210,42 +167,41 @@ export async function updateBlogPost(id, _previousState, formData) {
 
 export async function setBlogPostStatus(formData) {
   await requireAdmin();
-  const id = readText(formData, "id", 50);
-  const slug = readText(formData, "slug", 180);
-  const publishedValue = formData.get("published");
-  if (!id || (publishedValue !== "true" && publishedValue !== "false")) {
-    throw new Error("A valid blog post and publish status are required.");
+  const id = formData.get("id");
+  const published = formData.get("published") === "true";
+
+  if (!id || typeof id !== "string") {
+    return;
   }
 
   const sql = getDatabaseClient();
-  const updated = await sql`
+  const [updated] = await sql`
     UPDATE blog_posts
-    SET published = ${publishedValue === "true"}, updated_at = now()
+    SET published = ${published}, updated_at = now()
     WHERE id = ${id}
-    RETURNING id
+    RETURNING slug
   `;
-  if (!updated.length) {
-    throw new Error("This blog post could not be found.");
-  }
 
-  revalidateBlogPaths(slug);
+  if (updated?.slug) {
+    revalidateBlogPaths(updated.slug);
+  }
 }
 
 export async function deleteBlogPost(formData) {
   await requireAdmin();
-  const id = readText(formData, "id", 50);
-  const slug = readText(formData, "slug", 180);
-  if (!id) {
-    throw new Error("A blog post must be selected before deleting.");
+  const id = formData.get("id");
+  if (!id || typeof id !== "string") {
+    return;
   }
 
   const sql = getDatabaseClient();
-  const deleted = await sql`
-    DELETE FROM blog_posts WHERE id = ${id} RETURNING id
+  const [deleted] = await sql`
+    DELETE FROM blog_posts
+    WHERE id = ${id}
+    RETURNING slug
   `;
-  if (!deleted.length) {
-    throw new Error("This blog post could not be found.");
-  }
 
-  revalidateBlogPaths(slug);
+  if (deleted?.slug) {
+    revalidateBlogPaths(deleted.slug);
+  }
 }

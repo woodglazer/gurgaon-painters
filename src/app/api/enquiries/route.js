@@ -1,6 +1,7 @@
 import { connection } from "next/server";
 import { ENQUIRY_SERVICES } from "@/lib/enquiry-config";
 import { getDatabaseClient } from "@/lib/db";
+import { sendLeadWhatsAppNotification } from "@/lib/whatsapp-notifier";
 
 const noStore = { "Cache-Control": "no-store" };
 
@@ -72,10 +73,19 @@ export async function POST(request) {
   try {
     const sql = getDatabaseClient();
     const [enquiry] = await sql`
-      INSERT INTO enquiries (name, phone, service, message)
-      VALUES (${name}, ${phone}, ${service}, ${message})
+      INSERT INTO enquiries (name, phone, service, message, city)
+      VALUES (${name}, ${phone}, ${service}, ${message}, 'gurgaon')
       RETURNING id
     `;
+
+    // Trigger WhatsApp notification asynchronously
+    sendLeadWhatsAppNotification({
+      name,
+      phone,
+      service,
+      message,
+      city: "gurgaon",
+    }).catch((err) => console.error("WhatsApp trigger error:", err));
 
     return Response.json(
       { id: enquiry.id },
