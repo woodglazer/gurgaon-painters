@@ -11,7 +11,11 @@ const DEFAULT_IMAGE_MAP = {
 };
 
 /**
- * Robust prompt instructions to bypass AI detectors and create high-ranking humanized content.
+ * High-CTR Title Formulas:
+ * 1. Number + Benefit + City (e.g., 5 Costly Painting Mistakes in Gurgaon & How to Avoid Them)
+ * 2. Cost / Price transparency (e.g., House Painting Cost in Noida (2026 Price Breakdown))
+ * 3. Before You Hire (e.g., Hiring Painters in Gurgaon? 7 Questions You Must Ask First)
+ * 4. Specific Problem Solver (e.g., How to Stop Monsoon Wall Seelan in Noida High-Rise Flats)
  */
 function buildHumanizedPrompt(city, existingSlugs) {
   const cityName = city === "noida" ? "Noida & Greater Noida" : "Gurgaon (Gurugram)";
@@ -24,6 +28,16 @@ Write an authentic, highly practical, and engaging SEO-optimized blog post for $
 TARGET CITY: ${cityName}
 RESTRICTION: Do not write about these topics/slugs as they already exist: ${existingSlugs.slice(0, 15).join(", ")}.
 
+HIGH-CTR SEO TITLE & META RULES (CRITICAL):
+1. 'seoTitle' must be an irresistible, clickable headline designed to maximize Click-Through Rate (CTR) on Google search (between 50 to 60 characters).
+   Use proven high-CTR copywriting patterns:
+   - Specific Numbers & Years: e.g., "Cost of Painting 3BHK in Gurgaon (2026 Price List)"
+   - Warning / Mistake avoidance: e.g., "5 Painting Mistakes Most Noida Homeowners Regret"
+   - Curiosity & Direct Solution: e.g., "Wall Seelan in Noida? Real Fixes That Actually Work"
+   - Branded Hook: End naturally with | ${brandName} if space permits.
+2. 'description' (Meta Description): 145-155 characters. Must contain a compelling problem hook, a real metric or brand mention, and a clear action (e.g., "Discover actual per sq. ft. rates and expert tips before hiring.").
+3. NEVER make titles clickbaity without delivering real substance in the article.
+
 CRITICAL HUMANIZATION & ANTI-AI DETECTION RULES:
 1. NEVER use generic AI cliches such as: "delve", "bustling", "moreover", "furthermore", "in conclusion", "it is important to note", "testament to", "game changer", "tapestry", "beacon".
 2. Vary sentence length naturally: combine punchy 4-word sentences with descriptive 20-word observations. This high burstiness mimics human writing.
@@ -33,19 +47,19 @@ CRITICAL HUMANIZATION & ANTI-AI DETECTION RULES:
    - Practical paint recommendations: e.g., Asian Paints Royale Luxury Emulsion, Apex Ultima, Damp Sheath, Berger WeatherCoat, PU Italian Wood Polish.
 4. Voice: Honest, experienced, reassuring, and consultative.
 
-FAQS REQUIREMENT (VERY IMPORTANT FOR SEO & GOOGLE PAA):
-Generate 3 to 4 hyper-relevant, high search-intent Frequently Asked Questions (FAQs) that local homeowners in ${cityName} actually ask Google about this specific topic.
+FAQS REQUIREMENT (FOR GOOGLE PAA):
+Generate 3 to 4 hyper-relevant, high search-intent Frequently Asked Questions (FAQs) that local homeowners in ${cityName} actually search on Google.
 Answers must be direct, crisp (40-65 words each), and mention realistic local estimates or practical timelines.
 
 REQUIRED OUTPUT FORMAT:
 You MUST respond with pure JSON only (no markdown code blocks, no backticks, no extra text).
 The JSON object must have this exact structure:
 {
-  "title": "Natural title with primary keyword (max 70 characters)",
+  "title": "Clear readable post title with primary keyword (max 70 characters)",
   "slug": "url-friendly-slug-with-city-name-at-end",
   "category": "Interior Planning | Exterior Painting | Waterproofing | Colour Advice | Wood Finish",
-  "seoTitle": "High CTR SEO Meta Title (max 65 chars)",
-  "description": "Engaging meta description with keyword and call to action (140-155 characters)",
+  "seoTitle": "Irresistible High-CTR Clickable Google Title (50-60 characters)",
+  "description": "Compelling meta description with keyword and CTR hook (145-155 characters)",
   "imageType": "interior | exterior | waterproofing | texture | wood",
   "imageAlt": "Specific descriptive alt text for the featured photo",
   "checks": [
@@ -56,11 +70,11 @@ The JSON object must have this exact structure:
   ],
   "faqs": [
     {
-      "q": "Exact natural customer question?",
+      "q": "Exact high-intent customer question?",
       "a": "Direct, practical, 40-60 word answer tailored for ${cityName} homeowners."
     },
     {
-      "q": "Another high-intent pricing or process question?",
+      "q": "Another pricing or process question?",
       "a": "Direct, helpful answer with realistic details."
     },
     {
@@ -107,7 +121,7 @@ export async function generateAIBlogPost(city, options = { autoPublish: false })
         body: JSON.stringify({
           contents: [{ parts: [{ text: prompt }] }],
           generationConfig: {
-            temperature: 0.75,
+            temperature: 0.8, // Slightly higher creativity for punchier hooks
             topP: 0.95,
             responseMimeType: "application/json",
           },
@@ -181,6 +195,6 @@ export async function generateAIBlogPost(city, options = { autoPublish: false })
     RETURNING id, slug, title, city, published
   `;
 
-  console.log(`[AI Blog Generated with FAQs] -> ID: ${newPost.id}, City: ${city}`);
+  console.log(`[AI Blog Generated with High CTR SEO Title] -> ID: ${newPost.id}, City: ${city}`);
   return newPost;
 }
