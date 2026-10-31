@@ -51,6 +51,7 @@ function toArticle(row) {
 }
 
 export async function getPublishedBlogPosts(city = "gurgaon") {
+  "use cache";
   try {
     const sql = getDatabaseClient();
     const rows = await sql`
@@ -62,9 +63,8 @@ export async function getPublishedBlogPosts(city = "gurgaon") {
       ORDER BY created_at DESC
     `;
 
-    return rows.map(toArticle);
+    return rows.length > 0 ? rows.map(toArticle) : fallbackArticles;
   } catch (error) {
-    console.error("Unable to query blog posts from database:", error?.message);
     return fallbackArticles;
   }
 }
@@ -86,7 +86,7 @@ export async function getPublishedBlogPost(slug, city = "gurgaon") {
       return toArticle(rows[0]);
     }
   } catch (error) {
-    console.error(`Unable to query blog post "${slug}" from database:`, error?.message);
+    // fallback
   }
 
   return fallbackArticles.find((article) => article.slug === slug) || null;
