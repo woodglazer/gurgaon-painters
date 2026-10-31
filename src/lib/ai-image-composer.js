@@ -54,10 +54,11 @@ function buildImagePrompt(title, city, category) {
  */
 async function fetchBaseAiImage(prompt) {
   const encodedPrompt = encodeURIComponent(prompt);
-  const aiUrl = `https://image.pollinations.ai/prompt/${encodedPrompt}?width=1200&height=675&nologo=true&model=flux`;
+  // Using pollinations turbo model for faster response (under 5 seconds)
+  const aiUrl = `https://image.pollinations.ai/prompt/${encodedPrompt}?width=1200&height=675&nologo=true&model=turbo`;
 
   const controller = new AbortController();
-  const timeoutId = setTimeout(() => controller.abort(), 20000); // 20s timeout
+  const timeoutId = setTimeout(() => controller.abort(), 8000); // 8s timeout
 
   try {
     const res = await fetch(aiUrl, {
@@ -72,10 +73,10 @@ async function fetchBaseAiImage(prompt) {
     }
   } catch (err) {
     clearTimeout(timeoutId);
-    console.warn("[AI Image] Pollinations fetch timed out or failed:", err?.message);
+    console.warn("[AI Image] Primary image fetch skipped or timed out:", err?.message);
   }
 
-  // Graceful fallback to Unsplash painting/interior buffer
+  // Graceful quick fallback to curated architectural interior photo
   try {
     const fallbackUrl = "https://images.unsplash.com/photo-1589939705384-5185137a7f0f?q=80&w=1200&auto=format&fit=crop";
     const fbRes = await fetch(fallbackUrl);

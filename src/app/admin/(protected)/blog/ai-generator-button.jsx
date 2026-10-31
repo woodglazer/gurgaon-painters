@@ -17,14 +17,14 @@ export default function AIGeneratorButton({ currentCity = "gurgaon" }) {
     startTransition(async () => {
       try {
         const res = await generateBlogAction(targetCity);
-        if (res.success) {
+        if (res?.success) {
           setResultMsg(`Generated: "${res.title}"`);
           setTimeout(() => setResultMsg(""), 6000);
         } else {
-          alert(`Failed: ${res.error}`);
+          alert(`Failed: ${res?.error || "Unknown server error"}`);
         }
       } catch (err) {
-        alert("Error generating post.");
+        alert(`Error generating post: ${err?.message || "Please check network connection"}`);
       }
     });
   };
