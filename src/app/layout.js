@@ -51,6 +51,9 @@ export const metadata = {
   metadataBase: new URL(siteUrl || "https://www.gurgaonpainters.com"),
   title: { default: rootSeo.title.absolute, template: "%s" },
   applicationName: BRAND_NAME,
+  verification: {
+    google: '1c75f57a056c1207',
+  },
 };
 
 export default function RootLayout({ children }) {
