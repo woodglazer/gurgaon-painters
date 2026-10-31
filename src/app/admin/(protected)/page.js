@@ -86,10 +86,18 @@ export default async function AdminDashboardPage({ searchParams }) {
           ORDER BY created_at DESC
           LIMIT 6
         `,
-    sql`
-      SELECT COUNT(*) FILTER (WHERE published = true)::int AS published_count
-      FROM blog_posts
-    `,
+    isCityFiltered
+      ? sql`
+          SELECT COUNT(*)::int AS published_count
+          FROM blog_posts
+          WHERE published = true 
+            AND (LOWER(COALESCE(city, 'gurgaon')) = LOWER(${selectedCity}) OR LOWER(COALESCE(city, 'gurgaon')) = 'all')
+        `
+      : sql`
+          SELECT COUNT(*)::int AS published_count
+          FROM blog_posts
+          WHERE published = true
+        `,
   ]);
 
   const summary = counts[0] || { total_count: 0, new_count: 0, follow_up_count: 0 };
@@ -116,7 +124,9 @@ export default async function AdminDashboardPage({ searchParams }) {
       label: "Published blogs",
       icon: BookOpen,
       value: blogCounts[0]?.published_count || 0,
-      detail: "Published articles",
+      detail: selectedCity
+        ? `Published for ${selectedCity.charAt(0).toUpperCase() + selectedCity.slice(1)}`
+        : "Gurgaon & Noida combined",
     },
   ];
 
