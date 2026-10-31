@@ -152,6 +152,14 @@ export default async function AdminBlogPage({ searchParams }) {
                       >
                         {post.title}
                       </Link>
+                      {post.seoTitle && (
+                        <div className="mt-1 flex items-center gap-1.5 text-xs text-[#0284c7]">
+                          <span className="font-semibold uppercase tracking-wider text-[10px] bg-sky-50 text-sky-700 px-1.5 py-0.5 rounded border border-sky-200">
+                            SEO Title
+                          </span>
+                          <span className="line-clamp-1">{post.seoTitle}</span>
+                        </div>
+                      )}
                       <p className="mt-0.5 line-clamp-1 text-xs text-[#817a6e]">
                         {post.description}
                       </p>
