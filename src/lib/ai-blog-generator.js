@@ -33,6 +33,10 @@ CRITICAL HUMANIZATION & ANTI-AI DETECTION RULES:
    - Practical paint recommendations: e.g., Asian Paints Royale Luxury Emulsion, Apex Ultima, Damp Sheath, Berger WeatherCoat, PU Italian Wood Polish.
 4. Voice: Honest, experienced, reassuring, and consultative.
 
+FAQS REQUIREMENT (VERY IMPORTANT FOR SEO & GOOGLE PAA):
+Generate 3 to 4 hyper-relevant, high search-intent Frequently Asked Questions (FAQs) that local homeowners in ${cityName} actually ask Google about this specific topic.
+Answers must be direct, crisp (40-65 words each), and mention realistic local estimates or practical timelines.
+
 REQUIRED OUTPUT FORMAT:
 You MUST respond with pure JSON only (no markdown code blocks, no backticks, no extra text).
 The JSON object must have this exact structure:
@@ -50,6 +54,20 @@ The JSON object must have this exact structure:
     "Practical actionable tip 3",
     "Practical actionable tip 4"
   ],
+  "faqs": [
+    {
+      "q": "Exact natural customer question?",
+      "a": "Direct, practical, 40-60 word answer tailored for ${cityName} homeowners."
+    },
+    {
+      "q": "Another high-intent pricing or process question?",
+      "a": "Direct, helpful answer with realistic details."
+    },
+    {
+      "q": "Third relevant question?",
+      "a": "Direct, helpful answer with realistic details."
+    }
+  ],
   "body": "A comprehensive 700 to 1100 word detailed article written in well-structured paragraphs with natural line breaks (\\n\\n) between paragraphs and clear subheadings (formatted simply with bold like **Subheading Title**). Explain preparation, paint comparison, cost considerations, and maintenance."
 }
 `;
@@ -63,7 +81,6 @@ export async function generateAIBlogPost(city, options = { autoPublish: false })
 
   const sql = getDatabaseClient();
 
-  // 1. Get existing slugs for this city to prevent duplicate topics
   const existingRows = await sql`
     SELECT slug FROM blog_posts WHERE LOWER(city) = LOWER(${city})
   `;
@@ -71,7 +88,6 @@ export async function generateAIBlogPost(city, options = { autoPublish: false })
 
   const prompt = buildHumanizedPrompt(city, existingSlugs);
 
-  // Candidate models in priority order
   const candidateModels = [
     "gemini-3.5-flash",
     "gemini-3.5-flash-lite",
@@ -130,7 +146,6 @@ export async function generateAIBlogPost(city, options = { autoPublish: false })
     generated = JSON.parse(cleaned);
   }
 
-  // Ensure unique slug
   let finalSlug = generated.slug.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
   if (!finalSlug.includes(city)) {
     finalSlug = `${finalSlug}-${city}`;
@@ -143,12 +158,12 @@ export async function generateAIBlogPost(city, options = { autoPublish: false })
 
   const image = DEFAULT_IMAGE_MAP[generated.imageType] || DEFAULT_IMAGE_MAP.interior;
   const checksString = Array.isArray(generated.checks) ? generated.checks.join("\n") : (generated.checks || "");
+  const faqsJson = Array.isArray(generated.faqs) ? JSON.stringify(generated.faqs) : "[]";
 
-  // Insert into blog_posts table
   const [newPost] = await sql`
     INSERT INTO blog_posts (
       slug, category, title, seo_title, description, body, checks,
-      image, image_alt, published, city
+      image, image_alt, published, city, faqs
     ) VALUES (
       ${finalSlug},
       ${generated.category || "Painting Tips"},
@@ -160,11 +175,12 @@ export async function generateAIBlogPost(city, options = { autoPublish: false })
       ${image},
       ${generated.imageAlt || generated.title},
       ${options.autoPublish === true},
-      ${city}
+      ${city},
+      ${faqsJson}::jsonb
     )
     RETURNING id, slug, title, city, published
   `;
 
-  console.log(`[AI Blog Generated] -> ID: ${newPost.id}, City: ${city}, Published: ${newPost.published}`);
+  console.log(`[AI Blog Generated with FAQs] -> ID: ${newPost.id}, City: ${city}`);
   return newPost;
 }

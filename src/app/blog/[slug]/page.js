@@ -142,7 +142,11 @@ export default async function ArticlePage({ params }) {
           </nav>
         </div>
       </article>
-      <PageFAQs faqs={articleFaqs[article.slug] || []} title="Questions about this painting guide" className="bg-white" />
+      <PageFAQs
+        faqs={(article.faqs && article.faqs.length > 0) ? article.faqs : (articleFaqs[article.slug] || [])}
+        title="Frequently Asked Questions"
+        className="bg-white"
+      />
       <Footer />
     </main>
   );

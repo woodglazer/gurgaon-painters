@@ -22,6 +22,7 @@ const fallbackArticles = [
     imageAlt: "Freshly painted home interior",
     published: true,
     city: "gurgaon",
+    faqs: [],
     createdAt: "2026-10-26T06:45:17.928Z",
     updatedAt: "2026-10-26T06:45:17.928Z",
   },
@@ -30,6 +31,16 @@ const fallbackArticles = [
 function toArticle(row) {
   const body = row.body || "";
   const checks = row.checks || "";
+  let faqs = [];
+  if (Array.isArray(row.faqs)) {
+    faqs = row.faqs;
+  } else if (typeof row.faqs === "string") {
+    try {
+      faqs = JSON.parse(row.faqs);
+    } catch {
+      faqs = [];
+    }
+  }
 
   return {
     id: row.id,
@@ -45,6 +56,7 @@ function toArticle(row) {
     imageAlt: row.image_alt,
     published: row.published,
     city: row.city || "gurgaon",
+    faqs: Array.isArray(faqs) ? faqs : [],
     createdAt: row.created_at,
     updatedAt: row.updated_at,
   };
@@ -56,7 +68,7 @@ export async function getPublishedBlogPosts(city = "gurgaon") {
     const sql = getDatabaseClient();
     const rows = await sql`
       SELECT id, slug, category, title, seo_title, description, body, checks,
-        image, image_alt, published, city, created_at, updated_at
+        image, image_alt, published, city, faqs, created_at, updated_at
       FROM blog_posts
       WHERE published = true 
         AND LOWER(COALESCE(city, 'gurgaon')) = LOWER(${city})
@@ -74,7 +86,7 @@ export async function getPublishedBlogPost(slug, city = "gurgaon") {
     const sql = getDatabaseClient();
     const rows = await sql`
       SELECT id, slug, category, title, seo_title, description, body, checks,
-        image, image_alt, published, city, created_at, updated_at
+        image, image_alt, published, city, faqs, created_at, updated_at
       FROM blog_posts
       WHERE slug = ${slug} 
         AND published = true
@@ -99,14 +111,14 @@ export async function getAdminBlogPosts(filterCity) {
   const rows = isCityFiltered
     ? await sql`
         SELECT id, slug, category, title, seo_title, description, body, checks,
-          image, image_alt, published, city, created_at, updated_at
+          image, image_alt, published, city, faqs, created_at, updated_at
         FROM blog_posts
         WHERE LOWER(COALESCE(city, 'gurgaon')) = LOWER(${filterCity})
         ORDER BY updated_at DESC
       `
     : await sql`
         SELECT id, slug, category, title, seo_title, description, body, checks,
-          image, image_alt, published, city, created_at, updated_at
+          image, image_alt, published, city, faqs, created_at, updated_at
         FROM blog_posts
         ORDER BY updated_at DESC
       `;
@@ -118,7 +130,7 @@ export async function getAdminBlogPostBySlug(slug) {
   const sql = getDatabaseClient();
   const rows = await sql`
     SELECT id, slug, category, title, seo_title, description, body, checks,
-      image, image_alt, published, city, created_at, updated_at
+      image, image_alt, published, city, faqs, created_at, updated_at
     FROM blog_posts
     WHERE slug = ${slug}
     LIMIT 1
