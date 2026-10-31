@@ -58,7 +58,7 @@ export async function getPublishedBlogPosts(city = "gurgaon") {
         image, image_alt, published, city, created_at, updated_at
       FROM blog_posts
       WHERE published = true 
-        AND (LOWER(COALESCE(city, 'gurgaon')) = LOWER(${city}) OR LOWER(COALESCE(city, 'gurgaon')) = 'all')
+        AND LOWER(COALESCE(city, 'gurgaon')) = LOWER(${city})
       ORDER BY created_at DESC
     `;
 
@@ -76,7 +76,9 @@ export async function getPublishedBlogPost(slug, city = "gurgaon") {
       SELECT id, slug, category, title, seo_title, description, body, checks,
         image, image_alt, published, city, created_at, updated_at
       FROM blog_posts
-      WHERE slug = ${slug} AND published = true
+      WHERE slug = ${slug} 
+        AND published = true
+        AND LOWER(COALESCE(city, 'gurgaon')) = LOWER(${city})
       LIMIT 1
     `;
 

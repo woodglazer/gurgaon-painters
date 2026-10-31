@@ -41,7 +41,6 @@ export default function BlogPostForm({ post, defaultCity = "gurgaon" }) {
           >
             <option value="gurgaon">Gurgaon Painters (gurgaonpainters.com)</option>
             <option value="noida">Noida Painters (noidapainters.com)</option>
-            <option value="all">Both Websites (All Cities)</option>
           </select>
         </label>
       </div>
