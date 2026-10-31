@@ -7,6 +7,7 @@ import { getSelectedAdminCity } from "@/lib/admin-city-cookie";
 import { setBlogPostStatus } from "./actions";
 import DeleteBlogButton from "./delete-blog-button";
 import CityBadge from "../city-badge";
+import AIGeneratorButton from "./ai-generator-button";
 
 export const metadata = {
   title: "Blog | Admin Dashboard",
@@ -48,16 +49,22 @@ export default async function AdminBlogPage({ searchParams }) {
               : "Blog Posts"}
           </h1>
           <p className="mt-2 text-sm leading-6 text-[#746f68]">
-            Write articles, save drafts, and manage what appears on the public blog.
+            Write articles, save drafts, or generate humanized SEO posts with AI.
           </p>
         </div>
-        <Link
-          href="/admin/blog/new"
-          className="inline-flex items-center gap-2 rounded-md bg-[#c2410c] px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-[#9a3412]"
-        >
-          <Plus size={16} aria-hidden="true" />
-          Write a post
-        </Link>
+        
+        {/* Action Buttons: AI Generate + Manual Write */}
+        <div className="flex items-center gap-3">
+          <AIGeneratorButton currentCity={selectedCity || "gurgaon"} />
+
+          <Link
+            href="/admin/blog/new"
+            className="inline-flex items-center gap-2 rounded-md bg-[#c2410c] px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-[#9a3412]"
+          >
+            <Plus size={16} aria-hidden="true" />
+            Write a post
+          </Link>
+        </div>
       </header>
 
       <section aria-label="Blog totals" className="mt-7 grid gap-3 sm:grid-cols-3">
@@ -106,15 +113,18 @@ export default async function AdminBlogPage({ searchParams }) {
             <p className="mx-auto mt-2 max-w-md text-sm leading-6 text-[#817a6e]">
               {selectedCity
                 ? `No articles created for ${selectedCity} yet.`
-                : "Create your first article to share decorating guides and painting tips."}
+                : "Create your first article or use 'AI Write Post' above."}
             </p>
-            <Link
-              href="/admin/blog/new"
-              className="mt-5 inline-flex items-center gap-2 rounded-md bg-[#c2410c] px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-[#9a3412]"
-            >
-              <Plus size={16} aria-hidden="true" />
-              Write a post
-            </Link>
+            <div className="mt-5 flex justify-center gap-3">
+              <AIGeneratorButton currentCity={selectedCity || "gurgaon"} />
+              <Link
+                href="/admin/blog/new"
+                className="inline-flex items-center gap-2 rounded-md bg-[#c2410c] px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-[#9a3412]"
+              >
+                <Plus size={16} aria-hidden="true" />
+                Write a post
+              </Link>
+            </div>
           </div>
         ) : (
           <div className="overflow-x-auto">
@@ -159,7 +169,7 @@ export default async function AdminBlogPage({ searchParams }) {
                         />
                         <button
                           type="submit"
-                          className={`inline-flex rounded-full px-2.5 py-0.5 text-xs font-semibold transition ${
+                          className={`inline-flex rounded-full px-2.5 py-0.5 text-xs font-semibold transition cursor-pointer ${
                             post.published
                               ? "bg-emerald-50 text-emerald-700 hover:bg-emerald-100"
                               : "bg-amber-50 text-amber-700 hover:bg-amber-100"
