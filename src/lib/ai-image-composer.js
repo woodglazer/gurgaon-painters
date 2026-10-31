@@ -220,7 +220,11 @@ export async function generateAndStoreBrandedBlogImage({ title, city, category }
 
   const finalWebpBuffer = await baseImageSharp
     .composite(compositeLayers)
-    .webp({ quality: 85 })
+    .webp({
+      quality: 80,
+      effort: 4, // balanced compression
+      smartSubsample: true,
+    })
     .toBuffer();
 
   // 6. Store directly in Neon DB blog_images table
