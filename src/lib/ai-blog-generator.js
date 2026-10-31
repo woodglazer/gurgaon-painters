@@ -1,6 +1,7 @@
 "server-only";
 
 import { getDatabaseClient } from "./db";
+import { generateAndStoreBrandedBlogImage } from "./ai-image-composer";
 
 const DEFAULT_IMAGE_MAP = {
   interior: "/images/service-interior.webp",
@@ -170,7 +171,20 @@ export async function generateAIBlogPost(city, options = { autoPublish: false })
     finalSlug = `${finalSlug}-${Date.now().toString().slice(-4)}`;
   }
 
-  const image = DEFAULT_IMAGE_MAP[generated.imageType] || DEFAULT_IMAGE_MAP.interior;
+  let image = DEFAULT_IMAGE_MAP[generated.imageType] || DEFAULT_IMAGE_MAP.interior;
+  try {
+    const brandedImage = await generateAndStoreBrandedBlogImage({
+      title: generated.title,
+      city,
+      category: generated.category,
+    });
+    if (brandedImage) {
+      image = brandedImage;
+    }
+  } catch (imgError) {
+    console.error("[AI Blog Generator] Branded image generation failed, using fallback:", imgError?.message);
+  }
+
   const checksString = Array.isArray(generated.checks) ? generated.checks.join("\n") : (generated.checks || "");
   const faqsJson = Array.isArray(generated.faqs) ? JSON.stringify(generated.faqs) : "[]";
 
