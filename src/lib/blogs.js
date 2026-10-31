@@ -34,10 +34,19 @@ function toArticle(row) {
   const checks = row.checks || "";
   let faqs = [];
   if (Array.isArray(row.faqs)) {
-    faqs = row.faqs;
+    faqs = row.faqs.map((f) => ({
+      question: f.question || f.q || "",
+      answer: f.answer || f.a || "",
+    }));
   } else if (typeof row.faqs === "string") {
     try {
-      faqs = JSON.parse(row.faqs);
+      const parsed = JSON.parse(row.faqs);
+      if (Array.isArray(parsed)) {
+        faqs = parsed.map((f) => ({
+          question: f.question || f.q || "",
+          answer: f.answer || f.a || "",
+        }));
+      }
     } catch {
       faqs = [];
     }
