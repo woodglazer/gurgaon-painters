@@ -10,7 +10,6 @@ import { pageFaqs } from "../components/page-faqs";
 import { createSeoMetadata } from "../seo";
 import Breadcrumbs from "../components/Breadcrumbs";
 
-
 export const instant = false;
 
 const siteUrl = getSiteUrl();
@@ -37,23 +36,30 @@ export default async function BlogPage() {
             <h1 className="text-5xl font-medium leading-tight tracking-[-0.045em] text-[#29251f] sm:text-6xl">Practical painting advice for Gurgaon homes.</h1>
           </header>
 
-          <div className="mx-auto mt-10 grid max-w-6xl gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {articles.map((article) => (
-              <article key={article.slug} className="overflow-hidden rounded-md border border-[#29251f]/10 bg-white shadow-[0_8px_24px_rgba(35,31,24,0.06)]">
-                <Link href={`/blog/${article.slug}`} className="group block focus-visible:outline-2 focus-visible:outline-offset-[-4px] focus-visible:outline-[#c2410c]">
-                  <div className="relative aspect-[16/9] overflow-hidden">
-                    <Image src={article.image} alt={article.imageAlt} fill sizes="(max-width: 767px) 100vw, (max-width: 1023px) 50vw, 33vw" loading="lazy" className="object-cover transition-transform duration-500 group-hover:scale-105" />
-                  </div>
-                  <div className="p-5 text-left">
-                    <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[#c2410c]">{article.category}</p>
-                    <h2 className="mt-2 text-xl font-semibold leading-snug text-[#29251f]">{article.title}</h2>
-                    <p className="mt-3 text-sm leading-6 text-[#69645b]">{article.description}</p>
-                    <span className="mt-4 inline-flex text-sm font-semibold text-[#c2410c]">Read article <span aria-hidden="true" className="ml-2">→</span></span>
-                  </div>
-                </Link>
-              </article>
-            ))}
-          </div>
+          {articles.length > 0 ? (
+            <div className="mx-auto mt-10 grid max-w-6xl gap-6 md:grid-cols-2 lg:grid-cols-3">
+              {articles.map((article) => (
+                <article key={article.slug} className="overflow-hidden rounded-md border border-[#29251f]/10 bg-white shadow-[0_8px_24px_rgba(35,31,24,0.06)]">
+                  <Link href={`/blog/${article.slug}`} className="group block focus-visible:outline-2 focus-visible:outline-offset-[-4px] focus-visible:outline-[#c2410c]">
+                    <div className="relative aspect-[16/9] overflow-hidden">
+                      <Image src={article.image} alt={article.imageAlt} fill sizes="(max-width: 767px) 100vw, (max-width: 1023px) 50vw, 33vw" loading="lazy" className="object-cover transition-transform duration-500 group-hover:scale-105" />
+                    </div>
+                    <div className="p-5 text-left">
+                      <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[#c2410c]">{article.category}</p>
+                      <h2 className="mt-2 text-xl font-semibold leading-snug text-[#29251f]">{article.title}</h2>
+                      <p className="mt-3 text-sm leading-6 text-[#69645b]">{article.description}</p>
+                      <span className="mt-4 inline-flex text-sm font-semibold text-[#c2410c]">Read article <span aria-hidden="true" className="ml-2">→</span></span>
+                    </div>
+                  </Link>
+                </article>
+              ))}
+            </div>
+          ) : (
+            <div className="mx-auto mt-12 max-w-md rounded-lg border border-dashed border-[#ded8cf] bg-white p-8 text-center">
+              <p className="text-base font-medium text-[#29251f]">No blogs published yet</p>
+              <p className="mt-1 text-sm text-[#69645b]">New articles and painting guides will appear here once published.</p>
+            </div>
+          )}
         </div>
       </section>
       <PageFAQs faqs={pageFaqs.blog} title="Gurgaon painting guide FAQs" className="bg-white" />

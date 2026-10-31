@@ -75,9 +75,9 @@ export async function getPublishedBlogPosts(city = "gurgaon") {
       ORDER BY created_at DESC
     `;
 
-    return rows.length > 0 ? rows.map(toArticle) : fallbackArticles;
+    return rows.map(toArticle);
   } catch (error) {
-    return fallbackArticles;
+    return [];
   }
 }
 
@@ -101,7 +101,7 @@ export async function getPublishedBlogPost(slug, city = "gurgaon") {
     // fallback
   }
 
-  return fallbackArticles.find((article) => article.slug === slug) || null;
+  return null;
 }
 
 export async function getAdminBlogPosts(filterCity) {
