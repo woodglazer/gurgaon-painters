@@ -50,7 +50,7 @@ The JSON object must have this exact structure:
     "Practical actionable tip 3",
     "Practical actionable tip 4"
   ],
-  "body": "A comprehensive 700 to 1100 word detailed article written in well-structured paragraphs with natural line breaks (\n\n) between paragraphs and clear subheadings (formatted simply with bold like **Subheading Title**). Explain preparation, paint comparison, cost considerations, and maintenance."
+  "body": "A comprehensive 700 to 1100 word detailed article written in well-structured paragraphs with natural line breaks (\\n\\n) between paragraphs and clear subheadings (formatted simply with bold like **Subheading Title**). Explain preparation, paint comparison, cost considerations, and maintenance."
 }
 `;
 }
@@ -71,25 +71,48 @@ export async function generateAIBlogPost(city, options = { autoPublish: false })
 
   const prompt = buildHumanizedPrompt(city, existingSlugs);
 
-  // Call Gemini 2.5 Flash
-  const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`;
+  // Candidate models in priority order
+  const candidateModels = [
+    "gemini-3.5-flash",
+    "gemini-3.5-flash-lite",
+    "gemini-3.8-flash",
+    "gemini-flash-latest",
+  ];
 
-  const response = await fetch(url, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      contents: [{ parts: [{ text: prompt }] }],
-      generationConfig: {
-        temperature: 0.75,
-        topP: 0.95,
-        responseMimeType: "application/json",
-      },
-    }),
-  });
+  let response;
+  let lastError = "";
 
-  if (!response.ok) {
-    const errorText = await response.text();
-    throw new Error(`Gemini API error (${response.status}): ${errorText}`);
+  for (const model of candidateModels) {
+    try {
+      const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
+      const res = await fetch(url, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          contents: [{ parts: [{ text: prompt }] }],
+          generationConfig: {
+            temperature: 0.75,
+            topP: 0.95,
+            responseMimeType: "application/json",
+          },
+        }),
+      });
+
+      if (res.ok) {
+        response = res;
+        console.log(`[AI Generator] Successfully used model: ${model}`);
+        break;
+      } else {
+        const errTxt = await res.text();
+        lastError = `${model} (${res.status}): ${errTxt}`;
+      }
+    } catch (e) {
+      lastError = e?.message || "Network error";
+    }
+  }
+
+  if (!response) {
+    throw new Error(`Gemini API error with all models: ${lastError}`);
   }
 
   const data = await response.json();
@@ -103,7 +126,6 @@ export async function generateAIBlogPost(city, options = { autoPublish: false })
   try {
     generated = JSON.parse(rawText);
   } catch (err) {
-    // Strip markdown formatting if any was returned
     const cleaned = rawText.replace(/```json/g, "").replace(/```/g, "").trim();
     generated = JSON.parse(cleaned);
   }
